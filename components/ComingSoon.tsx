@@ -75,17 +75,7 @@ export default function ComingSoon() {
             {/* 2. CONTENT STAGE */}
             <div className="relative z-10 w-full max-w-4xl flex flex-col items-center text-center space-y-12 md:space-y-16">
 
-                {/* Logo Reveal */}
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                >
-                    <div className="flex flex-col items-center">
-                        <span className="font-serif text-3xl font-bold text-[#3A4D39]">Guzel.</span>
-                        <div className="h-px w-12 bg-[#3A4D39] mt-2 opacity-30" />
-                    </div>
-                </motion.div>
+
 
                 {/* Animated Headline */}
                 <div className="font-serif text-5xl md:text-7xl lg:text-8xl text-[#3A4D39] leading-[1.1] tracking-tight overflow-hidden">

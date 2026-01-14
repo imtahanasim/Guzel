@@ -54,6 +54,7 @@ export default function ArtProduct({ url, position, rotation = [0, 0, 0], scale 
                 url={url}
                 transparent
                 opacity={isOthersHovered ? 0.3 : 1} // Drei Image supports transparent & opacity prop if transparent is true 
+                // @ts-ignore
                 scale={[3, 4, 1]}
                 color={isOthersHovered ? "#444" : "white"} // Dim effect
             />

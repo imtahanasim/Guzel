@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description: "Handcrafted frames and art pieces from Pakistan",
 }
 
-import ConditionalHeader from "@/components/ConditionalHeader"
+import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="font-sans antialiased">
         <SmoothScroll>
-          <ConditionalHeader />
+          <Header />
           <main className="min-h-screen">
             {children}
           </main>

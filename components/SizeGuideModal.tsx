@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Ruler } from "lucide-react"
+import { X, Ruler, Image as ImageIcon } from "lucide-react"
 import Image from "next/image"
 
 interface SizeGuideModalProps {
@@ -59,13 +59,13 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                                     <div className="space-y-4 text-center group">
                                         <div className="relative aspect-[3/4] bg-[#e5e0d8] rounded-lg border-4 border-white shadow-md mx-auto w-32 flex items-center justify-center overflow-hidden">
                                             <Image
-                                                src="/product-pictures/photo-1568945721269-c998c4cbb043.avif"
-                                                alt="Small Size"
+                                                src="/product-pictures/photo-1725711028446-055093f4c658.avif"
+                                                alt="Small Frame"
                                                 fill
                                                 className="object-cover"
                                             />
                                             <div className="absolute -bottom-6 w-full text-center z-10">
-                                                <span className="bg-[#3D5C3D] text-white text-[10px] font-bold px-2 py-1 rounded-full">Small</span>
+                                                <span className="bg-[#3D5C3D] text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">Small</span>
                                             </div>
                                         </div>
                                         <div className="pt-4">
@@ -80,13 +80,13 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                                     <div className="space-y-4 text-center group">
                                         <div className="relative aspect-[3/4] bg-[#e5e0d8] rounded-lg border-4 border-white shadow-lg mx-auto w-40 flex items-center justify-center overflow-hidden">
                                             <Image
-                                                src="/product-pictures/photo-1725711028446-055093f4c658.avif"
-                                                alt="Medium Size"
+                                                src="/product-pictures/photo-1726329143742-b5e06b69a89e.avif"
+                                                alt="Medium Frame"
                                                 fill
                                                 className="object-cover"
                                             />
                                             <div className="absolute -bottom-6 w-full text-center z-10">
-                                                <span className="bg-[#3D5C3D] text-white text-[10px] font-bold px-2 py-1 rounded-full">Medium</span>
+                                                <span className="bg-[#3D5C3D] text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">Medium</span>
                                             </div>
                                         </div>
                                         <div className="pt-4">
@@ -101,13 +101,13 @@ export default function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps)
                                     <div className="space-y-4 text-center group">
                                         <div className="relative aspect-[3/4] bg-[#e5e0d8] rounded-lg border-4 border-white shadow-xl mx-auto w-48 flex items-center justify-center overflow-hidden">
                                             <Image
-                                                src="/product-pictures/premium_photo-1667239474298-844804eca38f.avif"
-                                                alt="Large Size"
+                                                src="/product-pictures/andrew-atroshenko-painting.webp"
+                                                alt="Large Frame"
                                                 fill
                                                 className="object-cover"
                                             />
                                             <div className="absolute -bottom-6 w-full text-center z-10">
-                                                <span className="bg-[#3D5C3D] text-white text-[10px] font-bold px-2 py-1 rounded-full">Large</span>
+                                                <span className="bg-[#3D5C3D] text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">Large</span>
                                             </div>
                                         </div>
                                         <div className="pt-4">
