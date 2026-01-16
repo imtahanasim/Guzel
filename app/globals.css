@@ -4,34 +4,43 @@
 
 @layer base {
   :root {
-    --background: 255 249 239; /* Soft Cream #FFF9EF */
-    --foreground: 30 30 30; /* Dark Charcoal */
-    
+    --background: 255 249 239;
+    /* Soft Cream #FFF9EF */
+    --foreground: 30 30 30;
+    /* Dark Charcoal */
+
     --card: 255 255 255;
     --card-foreground: 30 30 30;
-    
+
     --popover: 255 255 255;
     --popover-foreground: 30 30 30;
-    
-    --primary: 61 92 61; /* Brand Olive #3D5C3D */
-    --primary-foreground: 255 249 239; /* Soft Cream #FFF9EF */
-    
-    --secondary: 255 249 239; /* Soft Cream #FFF9EF */
-    --secondary-foreground: 61 92 61; /* Brand Olive #3D5C3D */
-    
+
+    --primary: 61 92 61;
+    /* Brand Olive #3D5C3D */
+    --primary-foreground: 255 249 239;
+    /* Soft Cream #FFF9EF */
+
+    --secondary: 255 249 239;
+    /* Soft Cream #FFF9EF */
+    --secondary-foreground: 61 92 61;
+    /* Brand Olive #3D5C3D */
+
     --muted: 245 245 245;
     --muted-foreground: 113 113 122;
-    
-    --accent: 255 249 239; /* Soft Cream #FFF9EF */
-    --accent-foreground: 61 92 61; /* Brand Olive #3D5C3D */
-    
+
+    --accent: 255 249 239;
+    /* Soft Cream #FFF9EF */
+    --accent-foreground: 61 92 61;
+    /* Brand Olive #3D5C3D */
+
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
-    
+
     --border: 229 229 229;
     --input: 229 229 229;
-    --ring: 61 92 61; /* Brand Olive #3D5C3D */
-    
+    --ring: 61 92 61;
+    /* Brand Olive #3D5C3D */
+
     --radius: 0.5rem;
   }
 }
@@ -40,6 +49,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-[#FFF9EF] text-[#3D5C3D];
   }
@@ -52,13 +62,19 @@
     font-style: normal;
     font-display: swap;
   } */
-  h1, h2 {
+  h1,
+  h2 {
     @apply font-serif tracking-tight;
     letter-spacing: -0.02em;
   }
-  h3, h4, h5, h6 {
+
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
   }
+
   .subtitle,
   .caption {
     @apply font-sans tracking-widest uppercase;
@@ -70,11 +86,12 @@
   .animate-scroll {
     animation: scroll 30s linear infinite;
   }
-  
+
   @keyframes scroll {
     0% {
       transform: translateX(0);
     }
+
     100% {
       transform: translateX(-50%);
     }

@@ -98,17 +98,17 @@ export default function Footer() {
   }
 
   const supportLinks = [
-    { label: "Track My Order", href: "/track-order" },
-    { label: "Shipping to Pakistan", href: "/shipping" },
-    { label: "Returns & Damages", href: "/returns" },
-    { label: "Frame Care Guide", href: "/care-guide" },
+    { label: "Shipping & Delivery", href: "/policies?tab=shipping" },
+    { label: "Track My Order", href: "https://merchantapi.leopardscourier.com/track" },
+    { label: "Returns & Exchanges", href: "/policies?tab=returns" },
+    { label: "Privacy Policy", href: "/policies?tab=privacy" },
+    { label: "Terms & Conditions", href: "/policies?tab=terms" },
   ]
 
   const studioLinks = [
-    { label: "Our Story", href: "/about" },
-    { label: "Visit the Studio", href: "/studio" },
-    { label: "B2B / Corporate Orders", href: "/b2b" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "About Us", href: "/about" },
+    { label: "guzel.printmallislamabad@gmail.com", href: "mailto:guzel.printmallislamabad@gmail.com" },
+    { label: "Instagram", href: "https://www.instagram.com/guzel.byprintmall/" },
   ]
 
   return (
@@ -128,7 +128,7 @@ export default function Footer() {
           {/* Column 2: Support (Mobile Accordion) */}
           <div className="md:block hidden">
             <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-              Support
+              Customer Care
             </h4>
             <ul className="space-y-3">
               {supportLinks.map((link) => (
@@ -147,7 +147,7 @@ export default function Footer() {
           {/* Mobile Accordion for Support */}
           <div className="md:hidden">
             <Accordion
-              title="Support"
+              title="Customer Care"
               isOpen={supportOpen}
               onToggle={() => setSupportOpen(!supportOpen)}
             >
@@ -169,7 +169,7 @@ export default function Footer() {
           {/* Column 3: The Studio (Mobile Accordion) */}
           <div className="md:block hidden">
             <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-              The Studio
+              Connect
             </h4>
             <ul className="space-y-3">
               {studioLinks.map((link) => (
@@ -188,7 +188,7 @@ export default function Footer() {
           {/* Mobile Accordion for Studio */}
           <div className="md:hidden">
             <Accordion
-              title="The Studio"
+              title="Connect"
               isOpen={studioOpen}
               onToggle={() => setStudioOpen(!studioOpen)}
             >

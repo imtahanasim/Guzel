@@ -21,9 +21,6 @@ export default async function Home() {
       <Hero />
       <GuzelScroll />
       <ArtisanProcess />
-      <StudioOrigins />
-
-
       <section className="py-16 md:py-32 bg-cream">
         <CollectionGrid items={featuredProducts} />
         <div className="flex justify-center mt-16">
@@ -38,6 +35,8 @@ export default async function Home() {
           </Link>
         </div>
       </section>
+
+      <StudioOrigins />
 
       <ServiceSteps />
       <SistersStoryDivider />

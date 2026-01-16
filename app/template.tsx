@@ -83,7 +83,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 >
                     <div className="relative w-80 h-80 flex items-center justify-center">
                         <Image
-                            src="/logo.png"
+                            src="/transition-logo.png"
                             alt="Guzel Logo"
                             fill
                             className="object-contain"
@@ -107,7 +107,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 >
                     <div className="relative w-80 h-80 flex items-center justify-center">
                         <Image
-                            src="/logo.png"
+                            src="/transition-logo.png"
                             alt="Guzel Logo"
                             fill
                             className="object-contain"

@@ -19,13 +19,13 @@ interface EditorialShopLayoutProps {
 }
 
 const safeCategories = [
-    { name: "Wood Frames", image: "/product-pictures/photo-1725711028446-055093f4c658.avif" },
-    { name: "Metal Frames", image: "/product-pictures/photo-1726329143742-b5e06b69a89e.avif" },
-    { name: "Gallery Walls", image: "/product-pictures/photo-1728848447811-9ee31b85e022.avif" },
-    { name: "Art Prints", image: "/product-pictures/andrew-atroshenko-painting.webp" },
-    { name: "Framed Art", image: "/product-pictures/premium_photo-1667239474298-844804eca38f.avif" },
-    { name: "Mirrors", image: "/product-pictures/photo-1712219002737-d4e04d21c2c8.avif" }, // Minimalist mirror vibe
-    { name: "Accessories", image: "/product-pictures/Customised printed trays.png" }, // Use PNG version
+    { name: "Oil Paintings", image: "/product-pictures/photo-1568945721269-c998c4cbb043.avif" },
+    { name: "Canvas Prints", image: "/product-pictures/premium_photo-1667239474298-844804eca38f.avif" },
+    { name: "Mirrors", image: "/product-pictures/photo-1712219002737-d4e04d21c2c8.avif" },
+    { name: "Gallery Walls", image: "/product-pictures/premium_photo-1667239474298-844804eca38f.avif" },
+    { name: "Trays", image: "/product-pictures/photo-1700605293481-0dbb483de8bc.avif" },
+    { name: "Grand Masters", image: "/product-pictures/photo-1674382009124-fafdebe47267.avif" },
+    { name: "Wooden Frames", image: "/product-pictures/photo-1694636435043-debf9ba4febb.avif" },
 ]
 
 export default function EditorialShopLayout({ products }: EditorialShopLayoutProps) {

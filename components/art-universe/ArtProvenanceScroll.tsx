@@ -42,12 +42,12 @@ const CHAPTERS = [
 
 const INTERLUDES = [
     {
-        title: "From the chaos of the studio, a singular vision emerges.",
-        subtitle: "Every stroke is a deliberate act of rebellion against the silence of the canvas."
+        title: "Güzel is a handcrafted framing studio creating timeless pieces that capture beauty in every form;",
+        subtitle: ""
     },
     {
-        title: "Preserved in silence, verified by the weight of the past.",
-        subtitle: "History is not just written; it is painted, framed, and passed down through generations."
+        title: "turning art, memories, and emotions into frames that bring warmth, elegance, and meaning to every space.",
+        subtitle: ""
     }
 ]
 
@@ -167,13 +167,13 @@ function TypewriterText({ text, className = "text-2xl md:text-3xl leading-relaxe
     const ref = useRef(null)
     const isInView = useInView(ref, { margin: "-20% 0px -20% 0px", once: false, amount: 0.2 })
 
-    const characters = text.split("")
+    const words = text.split(" ")
 
     const container = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: { staggerChildren: 0.015, delayChildren: 0.1 }, // Fast staggered type
+            transition: { staggerChildren: 0.015, delayChildren: 0.1 },
         },
     }
 
@@ -197,10 +197,14 @@ function TypewriterText({ text, className = "text-2xl md:text-3xl leading-relaxe
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
         >
-            {characters.map((char, index) => (
-                <motion.span variants={child} key={index} className="inline-block relative">
-                    {char === " " ? "\u00A0" : char}
-                </motion.span>
+            {words.map((word, i) => (
+                <span key={i} className="inline-block whitespace-nowrap mr-[0.25em]">
+                    {word.split("").map((char, charIndex) => (
+                        <motion.span variants={child} key={charIndex} className="inline-block relative">
+                            {char}
+                        </motion.span>
+                    ))}
+                </span>
             ))}
         </motion.p>
     )

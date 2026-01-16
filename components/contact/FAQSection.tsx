@@ -7,7 +7,7 @@ import { Plus } from "lucide-react"
 const FAQS = [
     {
         question: "Do you ship internationally?",
-        answer: "Yes, we ship to selected countries including the UK, USA, and UAE. International shipping typically takes 7-14 business days via DHL Express."
+        answer: "At this moment, our creations travel exclusively within national borders, serving major metropolitan hubs. We are dedicated to perfecting our domestic experience before expanding our horizons to the global stage."
     },
     {
         question: "What is your typical turnaround time?",

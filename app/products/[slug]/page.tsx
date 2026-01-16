@@ -313,10 +313,20 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                                 className="overflow-hidden"
                                             >
                                                 <div className="pb-8 space-y-4 text-sm md:text-[15px] text-[#4a4a4a] font-serif leading-relaxed whitespace-pre-line">
-                                                    <p>{product.dimensionsDetails || product.specs.dimensions}</p>
+                                                    <div>
+                                                        <span className="font-sans text-xs font-bold uppercase tracking-wider text-[#3D5C3D] block mb-1">Selected Size</span>
+                                                        <p>{selectedSize.id === 'custom' ? "Custom dimensions as requested." : selectedSize.label}</p>
+                                                    </div>
+
+                                                    <div>
+                                                        <span className="font-sans text-xs font-bold uppercase tracking-wider text-[#3D5C3D] block mb-1">Frame Profile</span>
+                                                        <p>{product.dimensionsDetails || product.specs.dimensions}</p>
+                                                    </div>
+
                                                     {product.materialStory && (
-                                                        <div className="pt-2 border-t border-dashed border-[#3D5C3D]/10">
-                                                            <p className="pt-2 italic text-[#3D5C3D]">{product.materialStory}</p>
+                                                        <div className="pt-4 border-t border-dashed border-[#3D5C3D]/10">
+                                                            <span className="font-sans text-xs font-bold uppercase tracking-wider text-[#3D5C3D] block mb-1">Material Story</span>
+                                                            <p className="italic">{product.materialStory}</p>
                                                         </div>
                                                     )}
                                                 </div>
@@ -344,9 +354,16 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                                 exit={{ height: 0, opacity: 0 }}
                                                 className="overflow-hidden"
                                             >
-                                                <p className="pb-8 text-sm md:text-[15px] text-[#4a4a4a] font-serif leading-relaxed">
-                                                    {product.specs.shipping}. Each piece is carefully packaged in our custom reinforced wooden crate to ensure perfect arrival. Wipe with a microfiber cloth to maintain the finish. Avoid direct sunlight.
-                                                </p>
+                                                <div className="pb-8 space-y-4 text-sm md:text-[15px] text-[#4a4a4a] font-serif leading-relaxed">
+                                                    <p>{product.specs.shipping}. Each piece is carefully packaged in our custom reinforced wooden crate to ensure perfect arrival.</p>
+
+                                                    {product.careInstructions && (
+                                                        <div>
+                                                            <span className="font-sans text-xs font-bold uppercase tracking-wider text-[#3D5C3D] block mb-1">Care</span>
+                                                            <p>{product.careInstructions}</p>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </motion.div>
                                         )}
                                     </AnimatePresence>

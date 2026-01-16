@@ -15,15 +15,27 @@ interface MegaMenuProps {
 import { cn } from "@/lib/utils"
 
 export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkClick }: MegaMenuProps) {
-  const menuItems = [
-    { name: "All", href: "/shop/catalog", description: "Browse our complete collection." },
-    { name: "Wood Frames", href: "/shop/catalog?category=Wood+Frames", description: "Hand-finished, sustainable styles." },
-    { name: "Metal Frames", href: "/shop/catalog?category=Metal+Frames", description: "Sleek, modern aluminium profiles." },
+  const shopCategories = [
+    { name: "Shop All", href: "/shop/catalog", description: "Explore our complete curated collection." },
+    { name: "Oil Paintings", href: "/shop/catalog?category=Oil+Paintings", description: "Hand-painted textures and rich vivid colors." },
+    { name: "Canvas Prints", href: "/shop/catalog?category=Canvas+Prints", description: "Museum-quality giclée prints on canvas." },
+    { name: "Mirrors", href: "/shop/catalog?category=Mirrors", description: "Reflective elegance for expanding spaces." },
+    { name: "Calligraphy", href: "/shop/catalog?category=Calligraphy", description: "Traditional scripts with modern aesthetics." },
+    { name: "Landscape Paintings", href: "/shop/catalog?category=Landscape+Paintings", description: "Scenic views tailored for serenity." },
+    { name: "Abstract Art", href: "/shop/catalog?category=Abstract+Art", description: "Contemporary forms and expressionism." },
+  ]
+
+  const collectionCategories = [
     { name: "Gallery Walls", href: "/shop/catalog?category=Gallery+Walls", description: "Curated sets for instant impact." },
-    { name: "Art Prints", href: "/shop/catalog?category=Art+Prints", description: "Exclusive works on giclée paper." },
-    { name: "Framed Art", href: "/shop/catalog?category=Framed+Art", description: "Ready-to-hang masterpieces." },
-    { name: "Mirrors", href: "/shop/catalog?category=Mirrors", description: "Minimalist designs for any space." },
-    { name: "Accessories", href: "/shop/catalog?category=Accessories", description: "The perfect finishing touches." },
+    { name: "Trays", href: "/shop/catalog?category=Trays", description: "Functional art for serving or display." },
+    { name: "Grand Masters", href: "/shop/catalog?category=Grand+Masters", description: "Replicas of history's greatest works." },
+  ]
+
+  const framingCategories = [
+    { name: "All Frames", href: "/shop/catalog?category=All+Frames", description: "Our complete range of custom mouldings." },
+    { name: "Wooden Frames", href: "/shop/catalog?category=Wooden+Frames", description: "Natural warmth and organic textures." },
+    { name: "Metal Frames", href: "/shop/catalog?category=Metal+Frames", description: "Sleek aluminum profiles for modern homes." },
+    { name: "Empty Frames", href: "/shop/catalog?category=Empty+Frames", description: "Just the frame, for your own art." },
   ]
 
   const slideshowImages = products
@@ -50,28 +62,26 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
       onMouseEnter={onMouseEnter}
     >
       <div className="bg-[#FFF9EF] text-[#3D5C3D] border-t border-[#e6e3d5] shadow-[0_16px_40px_rgba(0,0,0,0.12)]">
-        <div className="container max-w-6xl mx-auto px-6 py-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* Column 1 - Primary categories */}
-            <div className="space-y-4 md:col-span-2">
-              <h3 className="text-xs font-semibold tracking-[0.2em] uppercase text-[#6b6b6b]">
-                {category === "Shop" ? "Shop Categories" : "Framing"}
+        <div className="container max-w-7xl mx-auto px-6 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+            {/* Column 1: Shop */}
+            <div>
+              <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-[#3A4D39]/60 mb-6">
+                Shop
               </h3>
-              <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                {menuItems.map((item) => (
+              <div className="flex flex-col">
+                {shopCategories.map((item) => (
                   <Link
                     key={item.name}
-                    href={item.href || "/"}
+                    href={item.href}
                     onClick={() => onLinkClick?.()}
-                    className={cn(
-                      "group block",
-                      item.href === "#" && "border border-red-500 rounded-sm p-1" // Visual debugging
-                    )}
+                    className="group block mb-4 last:mb-0"
                   >
-                    <div className="text-sm font-medium text-[#1e1e1e] group-hover:text-[#3e523f] transition-colors uppercase tracking-wide">
+                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors uppercase tracking-wide">
                       {item.name}
                     </div>
-                    <div className="mt-0.5 text-xs text-gray-500 group-hover:text-[#3D5C3D] transition-colors">
+                    <div className="mt-1 text-xs text-stone-500 group-hover:text-[#3A4D39] transition-colors line-clamp-1">
                       {item.description}
                     </div>
                   </Link>
@@ -79,39 +89,88 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
               </div>
             </div>
 
-            {/* Column 3-4 - Featured card */}
-            <div className="md:col-span-1 lg:col-span-2">
+            {/* Column 2: Collections */}
+            <div>
+              <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-[#3A4D39]/60 mb-6">
+                Collections
+              </h3>
+              <div className="flex flex-col">
+                {collectionCategories.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => onLinkClick?.()}
+                    className="group block mb-4 last:mb-0"
+                  >
+                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors uppercase tracking-wide">
+                      {item.name}
+                    </div>
+                    <div className="mt-1 text-xs text-stone-500 group-hover:text-[#3A4D39] transition-colors line-clamp-1">
+                      {item.description}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Column 3: Framing */}
+            <div>
+              <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-[#3A4D39]/60 mb-6">
+                Framing
+              </h3>
+              <div className="flex flex-col">
+                {framingCategories.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => onLinkClick?.()}
+                    className="group block mb-4 last:mb-0"
+                  >
+                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors uppercase tracking-wide">
+                      {item.name}
+                    </div>
+                    <div className="mt-1 text-xs text-stone-500 group-hover:text-[#3A4D39] transition-colors line-clamp-1">
+                      {item.description}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Column 4: Featured Image */}
+            <div className="hidden md:block h-full">
+              <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-[#3A4D39]/60 mb-6 opacity-0">
+                Featured
+              </h3>
               <Link
-                href="/shop?category=frames"
+                href="/shop?category=Grand+Masters"
                 onClick={() => onLinkClick?.()}
-                className="block group"
+                className="block group relative h-[360px] w-full rounded-xl overflow-hidden bg-[#e6e3d5]"
               >
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-[#e6e3d5]">
-                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                  <div className="absolute inset-0">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={currentSlide}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1 }}
-                        className="absolute inset-0 w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
-                        style={{ backgroundImage: `url('${slideshowImages[currentSlide]}')` }}
-                      />
-                    </AnimatePresence>
-                  </div>
-                  <div className="absolute bottom-5 left-5 right-5 z-20 text-[#fdfcf6]">
-                    <p className="text-xs tracking-[0.2em] uppercase mb-1 text-[#f0eee4]">
-                      Featured
-                    </p>
-                    <h4 className="font-serif text-xl md:text-2xl mb-1">
-                      New Walnut Collection
-                    </h4>
-                    <p className="text-xs md:text-sm text-[#f0eee4]">
-                      Sculpted profiles in deep walnut, designed for gallery walls.
-                    </p>
-                  </div>
+                <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentSlide}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1 }}
+                      className="absolute inset-0 w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      style={{ backgroundImage: `url('${slideshowImages[currentSlide]}')` }}
+                    />
+                  </AnimatePresence>
+                </div>
+                <div className="absolute bottom-0 left-0 p-6 z-20 text-white">
+                  <p className="text-[10px] tracking-[0.2em] uppercase mb-2 text-white/80">
+                    New Arrival
+                  </p>
+                  <h4 className="font-serif text-2xl mb-1 leading-tight">
+                    Grand Masters
+                  </h4>
+                  <p className="text-xs text-white/90 font-light">
+                    Museum quality replicas for your home.
+                  </p>
                 </div>
               </Link>
             </div>
