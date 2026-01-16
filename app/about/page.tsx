@@ -174,8 +174,15 @@ function TimelineSection({ era, index, onInView }: { era: any, index: number, on
     const ref = useRef(null)
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
 
+    // Smooth spring physics to eliminate jitter
+    const smoothProgress = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    })
+
     // 3. Internal Parallax (Window Effect)
-    const yParallax = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"])
+    const yParallax = useTransform(smoothProgress, [0, 1], ["-10%", "10%"])
 
     const isInView = useInView(ref, { amount: 0.5 })
 
@@ -234,7 +241,7 @@ function TimelineSection({ era, index, onInView }: { era: any, index: number, on
 
                         {/* Image with Hover Reveal Caption */}
                         <motion.div
-                            style={{ y: yParallax, scale: 1.2 }}
+                            style={{ y: yParallax, scale: 1.2, willChange: "transform" }}
                             className="relative w-full h-full md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-in-out" // Added Grayscale logic
                         >
                             <Image
