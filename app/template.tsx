@@ -1,24 +1,31 @@
 "use client"
 
-import { useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
+import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 
-// The "Expensive" Curve
-const transitionCurve = { duration: 1.2, ease: [0.76, 0, 0.24, 1] }
+// The "Expensive" Curve - Speed up to 0.8s
+const transitionCurve = { duration: 0.8, ease: [0.76, 0, 0.24, 1] }
 
 // Number of columns for the shutter effect
 const columns = 5
 
-
-
 export default function Template({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
+    const [isTransitionStuck, setIsTransitionStuck] = useState(false)
 
-    // Reset scroll on page change (behind the curtain)
+    // Reset scroll and setup failsafe
     useEffect(() => {
         window.scrollTo(0, 0)
+        setIsTransitionStuck(false)
+
+        // Failsafe: If transition takes longer than 2.5s, force clear it
+        const timer = setTimeout(() => {
+            setIsTransitionStuck(true)
+        }, 2500)
+
+        return () => clearTimeout(timer)
     }, [pathname])
 
     return (
@@ -31,21 +38,23 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 */}
 
                 {/* Entrance Shutters: Slide UP from Center (0%) to Top (-100%) */}
-                <div className="fixed inset-0 z-[100] pointer-events-none flex">
-                    {[...Array(columns)].map((_, i) => (
-                        <motion.div
-                            key={`enter-${i}`}
-                            className="h-full bg-[#3e523f] w-1/5 relative border-r border-[#fdfcf6]/10 last:border-0"
-                            initial={{ y: "0%" }}
-                            animate={{ y: "-100%" }}
-                            exit={{ y: "-100%" }} // Stays up (cleared)
-                            transition={{
-                                ...transitionCurve,
-                                delay: i * 0.05,
-                            }}
-                        />
-                    ))}
-                </div>
+                {!isTransitionStuck && (
+                    <div className="fixed inset-0 z-[100] pointer-events-none flex">
+                        {[...Array(columns)].map((_, i) => (
+                            <motion.div
+                                key={`enter-${i}`}
+                                className="h-full bg-[#3e523f] w-1/5 relative border-r border-[#fdfcf6]/10 last:border-0"
+                                initial={{ y: "0%" }}
+                                animate={{ y: "-100%" }}
+                                exit={{ y: "-100%" }}
+                                transition={{
+                                    ...transitionCurve,
+                                    delay: i * 0.05,
+                                }}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 {/* Exit Shutters: Slide UP from Bottom (100%) to Center (0%) */}
                 <div className="fixed inset-0 z-[100] pointer-events-none flex">
