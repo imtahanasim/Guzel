@@ -5,9 +5,11 @@ import { PRODUCTS } from '@/lib/data';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
+    // VERSION CHECK: v2 (Updated connection check)
     if (!process.env.POSTGRES_URL) {
         return NextResponse.json({
             success: false,
+            version: 'v2',
             error: 'Vercel Postgres not connected. Please go to Vercel Dashboard -> Storage and link a database to this project, then redeploy.'
         }, { status: 500 });
     }
