@@ -5,6 +5,13 @@ import { PRODUCTS } from '@/lib/data';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
+    if (!process.env.POSTGRES_URL) {
+        return NextResponse.json({
+            success: false,
+            error: 'Vercel Postgres not connected. Please go to Vercel Dashboard -> Storage and link a database to this project, then redeploy.'
+        }, { status: 500 });
+    }
+
     try {
         // 1. Create Table
         await sql`

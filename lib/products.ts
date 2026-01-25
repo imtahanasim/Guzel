@@ -25,6 +25,12 @@ function mapProduct(data: any): Product {
 }
 
 export async function getProducts(): Promise<Product[]> {
+    // Graceful fallback if not connected to Vercel Postgres
+    if (!process.env.POSTGRES_URL) {
+        console.warn("⚠️ Vercel Postgres not connected. Using local fallback data.");
+        return FALLBACK_PRODUCTS.map(p => mapProduct(p));
+    }
+
     try {
         const { rows } = await sql`SELECT data FROM products ORDER BY (data->>'price')::int ASC`;
         if (rows.length === 0) {
@@ -33,8 +39,8 @@ export async function getProducts(): Promise<Product[]> {
         }
         return rows.map(row => mapProduct(row.data));
     } catch (error) {
-        console.error("Database Error:", error);
-        // Fallback for build time or if DB is not set up
+        // If table doesn't exist or other DB error
+        console.error("Database connection issue, using fallback data.");
         return FALLBACK_PRODUCTS.map(p => mapProduct(p));
     }
 }
