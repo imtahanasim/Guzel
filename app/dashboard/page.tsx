@@ -204,8 +204,25 @@ export default function DashboardPage() {
         }
     };
 
+    // Auto-generate slug from title if slug is empty
+    useEffect(() => {
+        if (selectedProduct && selectedProduct.title && !selectedProduct.slug) {
+            const generatedSlug = selectedProduct.title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            updateField('slug', generatedSlug);
+        }
+    }, [selectedProduct?.title]);
+
     const handleSave = async () => {
         if (!selectedProduct) return;
+
+        // Validation: Title and Slug are required
+        if (!selectedProduct.title.trim() || !selectedProduct.slug.trim()) {
+            alert('Error: Title and Slug are required.');
+            return;
+        }
 
         // Validation: Unique Size IDs
         if (selectedProduct.sizes) {
@@ -272,15 +289,19 @@ export default function DashboardPage() {
     );
 
     const updateField = (field: keyof Product, value: any) => {
-        if (!selectedProduct) return;
-        setSelectedProduct({ ...selectedProduct, [field]: value });
+        setSelectedProduct(prev => {
+            if (!prev) return null;
+            return { ...prev, [field]: value };
+        });
     };
 
     const updateSpec = (field: keyof Specs, value: string) => {
-        if (!selectedProduct) return;
-        setSelectedProduct({
-            ...selectedProduct,
-            specs: { ...selectedProduct.specs, [field]: value }
+        setSelectedProduct(prev => {
+            if (!prev) return null;
+            return {
+                ...prev,
+                specs: { ...prev.specs, [field]: value }
+            };
         });
     };
 
@@ -402,12 +423,26 @@ export default function DashboardPage() {
                                     >
                                         <option value="">Select Category</option>
                                         {[
-                                            "Wood Frames",
-                                            "Painted Frames",
-                                            "Metal Frames",
-                                            "Art Prints",
-                                            "Home Decor",
-                                            "Mirrors"
+                                            "Oil Paintings",
+                                            "Canvas Prints",
+                                            "Mirrors",
+                                            "Calligraphy",
+                                            "Landscape Paintings",
+                                            "Abstract Art",
+                                            "Medium Sized Classics",
+                                            "Framed Sets",
+                                            "Feature Frames",
+                                            "Tile Framed",
+                                            "Rumi Dance",
+                                            "Contemporary Figurative Art",
+                                            "Statement Pieces",
+                                            "Mini Frames",
+                                            "Gallery Walls",
+                                            "Trays",
+                                            "Grand Masters",
+                                            "All Frames",
+                                            "Wooden Frames",
+                                            "Empty Frames"
                                         ].map(cat => (
                                             <option key={cat} value={cat}>{cat}</option>
                                         ))}

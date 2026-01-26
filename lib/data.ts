@@ -1507,25 +1507,43 @@ export const PRODUCTS = [
         ]
     },
     {
-        "id": "1769440494606",
-        "slug": "",
-        "title": "Taha ",
-        "price": 1,
-        "originalPrice": 0,
-        "category": "Mirrors",
-        "description": "",
-        "images": [],
-        "longDescription": "",
-        "materialStory": "",
-        "careInstructions": "",
-        "storyImage": "",
-        "variants": [],
-        "sizes": [],
+        "id": "1769446565167",
+        "slug": "nordic-birch-frame",
+        "title": "Nordic Birch Frame",
+        "price": 180,
+        "originalPrice": 190,
+        "category": "All Frames",
+        "description": "Light, airy natural birch wood for a minimalist Scandinavian aesthetic.",
+        "images": [
+            "/product-pictures/IMG_20220102_193507_729-1769447129639-277463131.jpg",
+            "/product-pictures/13fdf7e8f6bc4bf392fd1818f1cffdee-1769447132461-531242297.jpg"
+        ],
+        "longDescription": "Embrace the simplicity of Scandinavian design. Our Nordic Birch frame is crafted from pale, fine-grained birch wood that brings a sense of calm and brightness to your walls.\\n\\nIts minimal profile and natural finish allow your artwork to take center stage, while the warm undertones of the wood prevent the look from feeling cold. Ideally suited for modern prints, bright photography, and minimalist art.",
+        "materialStory": "Sourced from sustainable forests in Finland, this Baltic Birch is prized for its uniform color and durability. We finish it with a clear, water-based matte sealer to preserve its natural pallor.",
+        "careInstructions": "Wipe with a dry, microfiber cloth. Avoid placing in high humidity areas (like bathrooms) to prevent wood movement.",
+        "storyImage": "/product-pictures/img-4.jpg",
+        "variants": [
+            {
+                "id": "birch",
+                "name": "Natural Birch",
+                "color": "#F6EAC2",
+                "image": "/product-pictures/img-4.jpg"
+            }
+        ],
+        "sizes": [
+            {
+                "id": "1769447138896",
+                "label": "12\" x 16\"",
+                "price": 180
+            }
+        ],
         "specs": {
             "dimensions": "",
             "material": "",
             "shipping": ""
         },
-        "badges": []
+        "badges": [
+            "AAA"
+        ]
     }
 ];

@@ -74,7 +74,7 @@ export default function Hero() {
             }}
           >
             <LuxuryButton onClick={() => window.location.href = "/shop/catalog"}>
-              Start Customizing
+              Shop Now
             </LuxuryButton>
           </motion.div>
         </motion.div>
