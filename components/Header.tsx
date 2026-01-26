@@ -65,9 +65,7 @@ export default function Header() {
         className="sticky top-0 z-50 text-[#3D5C3D]"
         initial={false}
         animate={{
-          backgroundColor: isScrolled
-            ? "rgba(255, 249, 239, 0.98)" // slightly denser cream when scrolled
-            : "rgba(255, 249, 239, 0.94)", // light cream at top for visibility
+          backgroundColor: "#FFF9EF", // Solid Cream matched to body
           backdropFilter: isScrolled ? "blur(12px)" : "blur(0px)",
           paddingTop: isScrolled ? 12 : 24,
           paddingBottom: isScrolled ? 12 : 24,

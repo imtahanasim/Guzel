@@ -43,30 +43,40 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
     // console.log("Current Slug:", params.slug)
 
     // Soft Fallback: Default to first product if slug not found
-    const product = PRODUCTS.find((p) => p.slug === params.slug) || PRODUCTS[0]
+    const product = (PRODUCTS.find((p) => p.slug === params.slug) || PRODUCTS[0]) as any
+
+    // Dynamic Sizes Logic
+    const availableSizes = product.sizes && product.sizes.length > 0
+        ? [...product.sizes, { id: "custom", label: 'Custom', price: 0 }]
+        : [
+            { id: "12x16", label: '12" x 16"', price: product.price },
+            { id: "18x24", label: '18" x 24"', price: Math.round(product.price * 1.5) },
+            { id: "24x36", label: '24" x 36"', price: Math.round(product.price * 2.2) },
+            { id: "custom", label: 'Custom', price: 0 }
+        ]
 
     const [activeImage, setActiveImage] = useState(product.images[0])
     const [selectedVariant, setSelectedVariant] = useState(product.variants[0])
-    const [selectedSize, setSelectedSize] = useState(SIZES[0])
+    const [selectedSize, setSelectedSize] = useState(availableSizes[0])
     const [openAccordion, setOpenAccordion] = useState<string | null>("story")
-    const [currentPrice, setCurrentPrice] = useState(product.price)
+    const [currentPrice, setCurrentPrice] = useState(selectedSize.price)
     const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
 
     // Reset state when product changes
     useEffect(() => {
         setActiveImage(product.images[0])
         setSelectedVariant(product.variants[0])
-        setSelectedSize(SIZES[0])
+        setSelectedSize(availableSizes[0])
         setOpenAccordion("story")
-        setCurrentPrice(product.price)
+        setCurrentPrice(availableSizes[0].price)
     }, [product])
 
     // Update price when size changes
     useEffect(() => {
         if (selectedSize.id !== 'custom') {
-            setCurrentPrice(Math.round(product.price * selectedSize.multiplier))
+            setCurrentPrice(selectedSize.price)
         }
-    }, [selectedSize, product.price])
+    }, [selectedSize])
 
     const addItem = useCartStore(state => state.addItem)
 
@@ -200,7 +210,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                         <button onClick={() => setIsSizeGuideOpen(true)} className="text-[10px] underline decoration-dotted text-[#3D5C3D] uppercase tracking-wider hover:text-black transition-colors">Size Guide</button>
                                     </div>
                                     <div className="flex flex-wrap gap-3">
-                                        {SIZES.map((size) => (
+                                        {availableSizes.map((size: any) => (
                                             <button
                                                 key={size.id}
                                                 onClick={() => setSelectedSize(size)}

@@ -1,28 +1,14 @@
-import type { Metadata } from "next"
-import { Playfair_Display, Inter } from "next/font/google"
-import "./globals.css"
-import CartSheet from "@/components/CartSheet"
-import SmoothScroll from "@/components/SmoothScroll"
+import "./globals.css";
+import LayoutWrapper from "@/components/LayoutWrapper";
+import { GeistSans } from "geist/font/sans";
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-})
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-})
-
-export const metadata: Metadata = {
-  title: "Guzel - Art & Framing Studio",
-  description: "Handcrafted frames and art pieces from Pakistan",
+export const metadata = {
+  title: 'Guzel - Art & Framing',
+  description: 'Experience the art of Guzel',
+  icons: {
+    icon: '/logo.png',
+  },
 }
-
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
 
 export default function RootLayout({
   children,
@@ -30,16 +16,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="font-sans antialiased">
-        <SmoothScroll>
-          <Header />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
-          <CartSheet />
-        </SmoothScroll>
+    <html lang="en" className={GeistSans.variable}>
+      <body>
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   )
