@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { saveProduct } from "@/lib/products"
+import { addProduct } from "@/lib/products"
 import { useRouter } from "next/navigation"
 
 export default function AddProductPage() {
@@ -31,19 +31,14 @@ export default function AddProductPage() {
 
         try {
             const product = {
-                id: `manual-${Date.now()}`,
                 ...formData,
                 price: Number(formData.price),
                 badges: ["New"], // Default badge
                 imageMain: formData.imageMain || "/product-pictures/artisan-framing.jpg", // Fallback
-                imageHover: formData.imageHover || "/product-pictures/frame-walnut.jpg",
-                images: [
-                    formData.imageMain || "/product-pictures/artisan-framing.jpg",
-                    formData.imageHover || "/product-pictures/frame-walnut.jpg"
-                ]
+                imageHover: formData.imageHover || "/product-pictures/frame-walnut.jpg"
             }
 
-            const res = await saveProduct(product)
+            const res = await addProduct(product)
             if (res.success) {
                 alert("Product added successfully!")
                 router.push("/shop")

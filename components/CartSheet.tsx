@@ -253,7 +253,10 @@ export default function CartSheet() {
             className="mt-2 h-12 w-full rounded-none bg-[#3D5C3D] text-xs font-semibold uppercase tracking-[0.24em] text-[#FFF9EF] hover:bg-[#304730]"
             onClick={() => {
               setIsLoading(true)
+              closeCart()
               router.push("/checkout")
+              // Reset loading state after a delay in case navigation fails or cart is reopened
+              setTimeout(() => setIsLoading(false), 1000)
             }}
             disabled={isLoading}
           >

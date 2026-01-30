@@ -9,9 +9,6 @@ import ZoomableImage from "@/components/ZoomableImage"
 import { ChevronDown, ChevronUp, Plus, Minus } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { notFound } from "next/navigation"
-
-import { PRODUCTS } from "@/lib/data"
 import SizeGuideModal from "@/components/SizeGuideModal"
 
 // Animation Variants
@@ -31,20 +28,12 @@ const itemVariant = {
     show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 }
 
-const SIZES = [
-    { id: "12x16", label: '12" x 16"', multiplier: 1 },
-    { id: "18x24", label: '18" x 24"', multiplier: 1.5 },
-    { id: "24x36", label: '24" x 36"', multiplier: 2.2 },
-    { id: "custom", label: 'Custom', multiplier: 0 } // handled separately
-]
+interface ProductDetailContentProps {
+    product: any
+    relatedProducts: any[]
+}
 
-export default function ProductDetailPage({ params }: { params: { slug: string } }) {
-    // 2. Debug & Fallback Logic
-    // console.log("Current Slug:", params.slug)
-
-    // Soft Fallback: Default to first product if slug not found
-    const product = (PRODUCTS.find((p) => p.slug === params.slug) || PRODUCTS[0]) as any
-
+export default function ProductContent({ product, relatedProducts }: ProductDetailContentProps) {
     // Dynamic Sizes Logic
     const availableSizes = product.sizes && product.sizes.length > 0
         ? [...product.sizes, { id: "custom", label: 'Custom', price: 0 }]
@@ -55,8 +44,12 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
             { id: "custom", label: 'Custom', price: 0 }
         ]
 
-    const [activeImage, setActiveImage] = useState(product.images[0])
-    const [selectedVariant, setSelectedVariant] = useState(product.variants[0])
+    const [activeImage, setActiveImage] = useState(product.images?.[0] || "")
+    const [selectedVariant, setSelectedVariant] = useState(
+        (product.variants && product.variants.length > 0)
+            ? product.variants[0]
+            : { id: "default", name: "Default", color: "#000", image: product.images?.[0] || "" }
+    )
     const [selectedSize, setSelectedSize] = useState(availableSizes[0])
     const [openAccordion, setOpenAccordion] = useState<string | null>("story")
     const [currentPrice, setCurrentPrice] = useState(selectedSize.price)
@@ -64,8 +57,14 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
     // Reset state when product changes
     useEffect(() => {
-        setActiveImage(product.images[0])
-        setSelectedVariant(product.variants[0])
+        setActiveImage(product.images?.[0] || "")
+        // Safety check for variants
+        if (product.variants && product.variants.length > 0) {
+            setSelectedVariant(product.variants[0])
+        } else {
+            // Create a dummy variant if none exist to prevent crashes
+            setSelectedVariant({ id: "default", name: "Default", color: "#000", image: product.images?.[0] || "" })
+        }
         setSelectedSize(availableSizes[0])
         setOpenAccordion("story")
         setCurrentPrice(availableSizes[0].price)
@@ -89,28 +88,15 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
         addItem({
             id: `${product.id}-${selectedVariant.id}-${selectedSize.id}-${Date.now()}`,
-            title: `${product.title} - ${selectedVariant.name}`,
+            title: `${product.title} - ${selectedVariant?.name || "Default"}`,
             price: currentPrice,
-            thumbnail: selectedVariant.image,
-            frame: selectedVariant.name,
+            thumbnail: selectedVariant?.image || "",
+            frame: selectedVariant?.name || "Default",
             mount: "None",
             size: selectedSize.label
         })
     }
 
-    // Related Products Logic
-    let relatedProducts = PRODUCTS.filter(
-        (p) => p.category === product.category && p.slug !== product.slug
-    )
-    if (relatedProducts.length < 4) {
-        const others = PRODUCTS.filter(
-            (p) => p.category !== product.category && p.slug !== product.slug
-        )
-        for (const other of others) {
-            if (relatedProducts.length >= 4) break
-            relatedProducts.push(other)
-        }
-    }
     const relatedProductsMapped = relatedProducts.slice(0, 4).map(p => ({
         ...p,
         imageMain: p.images[0],
@@ -155,7 +141,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
 
                             {/* Thumbnail Grid */}
                             <div className="grid grid-cols-4 gap-4">
-                                {product.images.map((img, idx) => (
+                                {product.images.map((img: string, idx: number) => (
                                     <button
                                         key={idx}
                                         onClick={() => setActiveImage(img)}
@@ -227,36 +213,38 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                                     </div>
                                 </div>
 
-                                {/* Finish Selector */}
-                                <div className="space-y-4">
-                                    <span className="text-xs font-bold uppercase tracking-widest text-[#1e1e1e]/60">
-                                        Finish: <span className="text-[#1e1e1e]">{selectedVariant.name}</span>
-                                    </span>
-                                    <div className="flex gap-4">
-                                        {product.variants.map((variant) => (
-                                            <button
-                                                key={variant.id}
-                                                onClick={() => {
-                                                    setSelectedVariant(variant)
-                                                    setActiveImage(variant.image)
-                                                }}
-                                                className={cn(
-                                                    "relative w-12 h-12 rounded-full overflow-hidden border transition-all duration-300",
-                                                    selectedVariant.id === variant.id
-                                                        ? "border-[#3D5C3D] ring-1 ring-[#3D5C3D] ring-offset-2 ring-offset-cream scale-110"
-                                                        : "border-transparent opacity-80 hover:opacity-100 dark:ring-offset-black" // dark mode safety
-                                                )}
-                                            >
-                                                <ImageWithFallback
-                                                    src={variant.image}
-                                                    alt={variant.name}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </button>
-                                        ))}
+                                {/* Finish Selector - Only show if variants exist */}
+                                {product.variants && product.variants.length > 0 && (
+                                    <div className="space-y-4">
+                                        <span className="text-xs font-bold uppercase tracking-widest text-[#1e1e1e]/60">
+                                            Finish: <span className="text-[#1e1e1e]">{selectedVariant?.name}</span>
+                                        </span>
+                                        <div className="flex gap-4">
+                                            {product.variants.map((variant: any) => (
+                                                <button
+                                                    key={variant.id}
+                                                    onClick={() => {
+                                                        setSelectedVariant(variant)
+                                                        setActiveImage(variant.image)
+                                                    }}
+                                                    className={cn(
+                                                        "relative w-12 h-12 rounded-full overflow-hidden border transition-all duration-300",
+                                                        selectedVariant.id === variant.id
+                                                            ? "border-[#3D5C3D] ring-1 ring-[#3D5C3D] ring-offset-2 ring-offset-cream scale-110"
+                                                            : "border-transparent opacity-80 hover:opacity-100 dark:ring-offset-black" // dark mode safety
+                                                    )}
+                                                >
+                                                    <ImageWithFallback
+                                                        src={variant.image}
+                                                        alt={variant.name}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 {/* Add To Cart Button */}
                                 <button

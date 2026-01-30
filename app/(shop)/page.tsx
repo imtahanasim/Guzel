@@ -7,7 +7,7 @@ import ArtisanProcess from "@/components/ArtisanProcess"
 import StudioOrigins from "@/components/StudioOrigins"
 
 import CollectionGrid from "@/components/CollectionGrid"
-import ServiceSteps from "@/components/ServiceSteps"
+
 import SistersStoryDivider from "@/components/SistersStoryDivider"
 
 import { getProducts } from "@/lib/products"
@@ -38,7 +38,7 @@ export default async function Home() {
 
       <StudioOrigins />
 
-      <ServiceSteps />
+
       <SistersStoryDivider />
 
     </main>

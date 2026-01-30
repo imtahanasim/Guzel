@@ -11,6 +11,16 @@ export interface CartItem {
   quantity: number
 }
 
+export interface CheckoutFormData {
+  email: string
+  firstName: string
+  lastName: string
+  phone: string
+  city: string
+  address: string
+  paymentMethod: "card" | "cod"
+}
+
 interface CartStore {
   isOpen: boolean
   items: CartItem[]
@@ -20,11 +30,18 @@ interface CartStore {
   removeItem: (id: string) => void
   updateQuantity: (id: string, quantity: number) => void
   getSubtotal: () => number
+  checkoutFormData: CheckoutFormData | null
+  setCheckoutFormData: (data: CheckoutFormData) => void
+  clearCart: () => void
 }
 
 export const useCartStore = create<CartStore>((set, get) => ({
   isOpen: false,
   items: [],
+  checkoutFormData: null,
+
+  setCheckoutFormData: (data) => set({ checkoutFormData: data }),
+  clearCart: () => set({ items: [], checkoutFormData: null }),
 
   openCart: () => set({ isOpen: true }),
   closeCart: () => set({ isOpen: false }),

@@ -204,25 +204,48 @@ export default function DashboardPage() {
         }
     };
 
-    // Auto-generate slug from title if slug is empty
-    useEffect(() => {
-        if (selectedProduct && selectedProduct.title && !selectedProduct.slug) {
-            const generatedSlug = selectedProduct.title
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-            updateField('slug', generatedSlug);
-        }
-    }, [selectedProduct?.title]);
+    // ... rest of handlers ...
+
+    if (isLocked) {
+        return (
+            <div className="min-h-screen bg-stone-50 flex items-center justify-center p-4">
+                <div className="max-w-sm w-full bg-white rounded-xl shadow-lg border border-stone-100 p-8">
+                    <div className="text-center mb-6">
+                        <div className="w-12 h-12 bg-stone-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Lock className="w-6 h-6 text-white" />
+                        </div>
+                        <h2 className="text-xl font-bold text-stone-900">Dashboard Locked</h2>
+                        <p className="text-stone-500 text-sm mt-1">Enter password to access</p>
+                    </div>
+
+                    <form onSubmit={handleUnlock} className="space-y-4">
+                        <div>
+                            <input
+                                type="password"
+                                value={passwordInput}
+                                onChange={(e) => setPasswordInput(e.target.value)}
+                                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-stone-900 transition-all font-medium text-center tracking-widest"
+                                placeholder="••••••••"
+                                autoFocus
+                            />
+                        </div>
+                        {loginError && <p className="text-red-500 text-xs text-center font-medium">{loginError}</p>}
+                        <button
+                            type="submit"
+                            disabled={checkingAuth}
+                            className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors flex justify-center"
+                        >
+                            {checkingAuth ? <Loader2 className="w-5 h-5 animate-spin" /> : "Unlock Dashboard"}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
 
     const handleSave = async () => {
         if (!selectedProduct) return;
-
-        // Validation: Title and Slug are required
-        if (!selectedProduct.title.trim() || !selectedProduct.slug.trim()) {
-            alert('Error: Title and Slug are required.');
-            return;
-        }
 
         // Validation: Unique Size IDs
         if (selectedProduct.sizes) {
@@ -289,59 +312,17 @@ export default function DashboardPage() {
     );
 
     const updateField = (field: keyof Product, value: any) => {
-        setSelectedProduct(prev => {
-            if (!prev) return null;
-            return { ...prev, [field]: value };
-        });
+        if (!selectedProduct) return;
+        setSelectedProduct({ ...selectedProduct, [field]: value });
     };
 
     const updateSpec = (field: keyof Specs, value: string) => {
-        setSelectedProduct(prev => {
-            if (!prev) return null;
-            return {
-                ...prev,
-                specs: { ...prev.specs, [field]: value }
-            };
+        if (!selectedProduct) return;
+        setSelectedProduct({
+            ...selectedProduct,
+            specs: { ...selectedProduct.specs, [field]: value }
         });
     };
-
-    // Strict Lock Check
-    if (isLocked) {
-        return (
-            <div className="min-h-screen bg-stone-50 flex items-center justify-center p-4">
-                <div className="max-w-sm w-full bg-white rounded-xl shadow-lg border border-stone-100 p-8">
-                    <div className="text-center mb-6">
-                        <div className="w-12 h-12 bg-stone-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Lock className="w-6 h-6 text-white" />
-                        </div>
-                        <h2 className="text-xl font-bold text-stone-900">Dashboard Locked</h2>
-                        <p className="text-stone-500 text-sm mt-1">Enter password to access</p>
-                    </div>
-
-                    <form onSubmit={handleUnlock} className="space-y-4">
-                        <div>
-                            <input
-                                type="password"
-                                value={passwordInput}
-                                onChange={(e) => setPasswordInput(e.target.value)}
-                                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-stone-900 transition-all font-medium text-center tracking-widest"
-                                placeholder="••••••••"
-                                autoFocus
-                            />
-                        </div>
-                        {loginError && <p className="text-red-500 text-xs text-center font-medium">{loginError}</p>}
-                        <button
-                            type="submit"
-                            disabled={checkingAuth}
-                            className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors flex justify-center"
-                        >
-                            {checkingAuth ? <Loader2 className="w-5 h-5 animate-spin" /> : "Unlock Dashboard"}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen bg-white text-stone-900 font-sans pl-80">
@@ -423,26 +404,12 @@ export default function DashboardPage() {
                                     >
                                         <option value="">Select Category</option>
                                         {[
-                                            "Oil Paintings",
-                                            "Canvas Prints",
-                                            "Mirrors",
-                                            "Calligraphy",
-                                            "Landscape Paintings",
-                                            "Abstract Art",
-                                            "Medium Sized Classics",
-                                            "Framed Sets",
-                                            "Feature Frames",
-                                            "Tile Framed",
-                                            "Rumi Dance",
-                                            "Contemporary Figurative Art",
-                                            "Statement Pieces",
-                                            "Mini Frames",
-                                            "Gallery Walls",
-                                            "Trays",
-                                            "Grand Masters",
-                                            "All Frames",
-                                            "Wooden Frames",
-                                            "Empty Frames"
+                                            "Wood Frames",
+                                            "Painted Frames",
+                                            "Metal Frames",
+                                            "Art Prints",
+                                            "Home Decor",
+                                            "Mirrors"
                                         ].map(cat => (
                                             <option key={cat} value={cat}>{cat}</option>
                                         ))}

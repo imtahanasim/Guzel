@@ -67,7 +67,7 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
 
             {/* Column 1: Shop */}
             <div>
-              <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-[#3A4D39]/60 mb-6">
+              <h3 className="font-serif text-3xl font-bold text-[#3A4D39] mb-6 border-b border-[#3A4D39]/20 pb-3">
                 Shop
               </h3>
               <div className="flex flex-col">
@@ -78,7 +78,7 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
                     onClick={() => onLinkClick?.()}
                     className="group block mb-4 last:mb-0"
                   >
-                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors uppercase tracking-wide">
+                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors tracking-wide">
                       {item.name}
                     </div>
                     <div className="mt-1 text-xs text-stone-500 group-hover:text-[#3A4D39] transition-colors line-clamp-1">
@@ -91,7 +91,7 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
 
             {/* Column 2: Collections */}
             <div>
-              <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-[#3A4D39]/60 mb-6">
+              <h3 className="font-serif text-3xl font-bold text-[#3A4D39] mb-6 border-b border-[#3A4D39]/20 pb-3">
                 Collections
               </h3>
               <div className="flex flex-col">
@@ -102,7 +102,7 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
                     onClick={() => onLinkClick?.()}
                     className="group block mb-4 last:mb-0"
                   >
-                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors uppercase tracking-wide">
+                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors tracking-wide">
                       {item.name}
                     </div>
                     <div className="mt-1 text-xs text-stone-500 group-hover:text-[#3A4D39] transition-colors line-clamp-1">
@@ -115,7 +115,7 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
 
             {/* Column 3: Framing */}
             <div>
-              <h3 className="font-serif text-xs tracking-[0.2em] uppercase text-[#3A4D39]/60 mb-6">
+              <h3 className="font-serif text-3xl font-bold text-[#3A4D39] mb-6 border-b border-[#3A4D39]/20 pb-3">
                 Framing
               </h3>
               <div className="flex flex-col">
@@ -126,7 +126,7 @@ export default function MegaMenu({ category, onMouseLeave, onMouseEnter, onLinkC
                     onClick={() => onLinkClick?.()}
                     className="group block mb-4 last:mb-0"
                   >
-                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors uppercase tracking-wide">
+                    <div className="font-sans font-medium text-[#3A4D39] group-hover:text-[#2A3829] transition-colors tracking-wide">
                       {item.name}
                     </div>
                     <div className="mt-1 text-xs text-stone-500 group-hover:text-[#3A4D39] transition-colors line-clamp-1">

@@ -10,34 +10,18 @@ import Magnetic from "@/components/ui/Magnetic"
 // --- 1. Data Structure Update (The 4 Eras) ---
 const TIMELINE_ERAS = [
     {
-        year: "1990",
-        title: "The Woodworker's Oath",
-        description: "It began in silence. A small workshop in Islamabad where the only sound was the chisel against walnut. He didn't just build frames; he engineered sanctuaries. Every mitre was a promise of longevity, every joint a lesson in structural integrity.",
-        image: "/product-pictures/photo-1568945721269-c998c4cbb043.avif", // Father's Era
-        align: "left",
-        theme: "engineering"
-    },
-    {
         year: "2010",
-        title: "Silent Perfection",
-        description: "Reputation grew not by marketing, but by the weight of the work. We became the secret keeper for collectors who valued the archival standard above all else. The tools aged, but the precision never drifted.",
-        image: "/product-pictures/custom-trays-main.jpg", // Tools/Workshop
-        align: "right",
+        title: "The Beginning",
+        description: "Framing started at Printmall in F6 Markaz Islamabad. A small workshop where the foundation of quality and craftsmanship was laid.",
+        image: "/product-pictures/photo-1568945721269-c998c4cbb043.avif", // Using the workshop image
+        align: "left",
         theme: "engineering"
     },
     {
-        year: "2023",
-        title: "A New Eye",
-        description: "I returned to the studio with a different perspective. Where he saw structure, I saw story. I brought design sensibility to his structural mastery, reimagining the frame not just as a border, but as an extension of the art itself.",
-        image: "/product-pictures/andrew-atroshenko-main.jpg", // Daughter's Era / Studio
-        align: "left",
-        theme: "art"
-    },
-    {
-        year: "NOW",
-        title: "The Promise",
-        description: "Two generations, one seal. Today, we fuse his engineering with my vision. It is no longer just a workshop; it is a design studio where history is re-framed for the modern aesthetic.",
-        image: "/product-pictures/abstract-women-main.jpg", // The Union / Modern
+        year: "2026",
+        title: "Online Studio",
+        description: "Launch Online Art & Framing Studio. Expanding our horizon to bring our curated art and custom frames to your doorstep.",
+        image: "/product-pictures/abstract-women-main.jpg", // Using a modern image
         align: "right",
         theme: "art"
     }
@@ -59,7 +43,7 @@ export default function MethodologyPage() {
     const heroBlur = useTransform(scrollYProgress, [0, 0.15], ["0px", "10px"])
 
     return (
-        <div ref={containerRef} className="relative bg-[#fdfcf6] text-[#1a1a1a] min-h-screen overflow-hidden selection:bg-[#3D5C3D] selection:text-white">
+        <div ref={containerRef} className="relative bg-[#F9F8F4] text-[#1a1a1a] min-h-screen overflow-hidden selection:bg-[#2C4C3B] selection:text-white">
 
 
 
@@ -84,17 +68,18 @@ export default function MethodologyPage() {
                 />
             </div>
 
+
             {/* --- HERO SECTION --- */}
             <div className="h-screen flex flex-col items-center justify-center sticky top-0 z-10 pointer-events-none">
                 <motion.h1
                     style={{ scale: heroScale, opacity: heroOpacity, filter: heroBlur }}
-                    className="text-4xl md:text-[10vw] leading-none font-bold uppercase tracking-tighter text-[#3D5C3D] text-center whitespace-nowrap mb-6 pointer-events-auto"
+                    className="text-4xl md:text-[10vw] leading-none font-bold uppercase tracking-tighter text-[#2C4C3B] text-center whitespace-nowrap mb-6 pointer-events-auto font-serif"
                 >
                     A Legacy <br /> Re-Framed
                 </motion.h1>
                 <motion.p
                     style={{ opacity: heroOpacity }}
-                    className="font-serif text-lg md:text-xl text-[#3D5C3D] max-w-lg text-center leading-relaxed"
+                    className="font-serif text-lg md:text-xl text-[#2C4C3B] max-w-lg text-center leading-relaxed"
                 >
                     From a father&#39;s workshop to a modern studio.
                 </motion.p>
@@ -102,7 +87,7 @@ export default function MethodologyPage() {
             </div>
 
             {/* --- CONTENT LAYER (The Timeline) --- */}
-            <div className="relative z-20 bg-[#fdfcf6]">
+            <div className="relative z-20 bg-[#F9F8F4]">
                 <div className="container mx-auto px-6 max-w-[1600px] relative pb-32">
 
                     {TIMELINE_ERAS.map((era, index) => (
@@ -118,7 +103,7 @@ export default function MethodologyPage() {
                     <div className="py-24 flex justify-center relative">
                         <div className="bg-[#fdfcf6] p-12 z-10 text-center border-y border-[#3D5C3D]/10">
                             <h2 className="text-4xl md:text-6xl font-bold text-[#3D5C3D] uppercase tracking-tighter">
-                                30+ Years of Heritage
+                                16+ Years of Heritage
                             </h2>
                         </div>
                     </div>
@@ -157,6 +142,23 @@ export default function MethodologyPage() {
                         >
                             <Image src="/product-pictures/abstract-women-hover.jpg" alt="Vintage Tool 3" fill className="object-cover md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-in-out" />
                         </motion.div>
+                    </div>
+
+                    {/* NEW CONTENT SECTIONS */}
+                    <IntroductionSection />
+                    <PromiseSection />
+                    <OfferingsSection />
+                    <div className="py-32 text-center bg-[#F9F8F4]">
+                        <Link href="/shop" className="inline-block relative group">
+                            <motion.span
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                                className="font-serif text-4xl md:text-7xl text-[#2C4C3B] italic tracking-tight"
+                            >
+                                Discover the art that feels like home.
+                            </motion.span>
+                        </Link>
                     </div>
 
                     {/* GRAND FINALE WITH STAMP */}
@@ -404,5 +406,157 @@ function ExperienceLoop() {
                 </Magnetic>
             </div>
         </div>
+    )
+}
+
+function IntroductionSection() {
+    return (
+        <section className="py-32 md:py-40 relative bg-[#F9F8F4]">
+            <div className="max-w-4xl mx-auto px-6 relative z-10">
+
+                {/* Intro: Centered, Breathable, Slow Fade */}
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, margin: "-100px" }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    className="text-center space-y-12 mb-32"
+                >
+                    <span className="text-xs font-sans tracking-[0.2em] uppercase text-[#2C4C3B]/60 block mb-4">
+                        Our Essence
+                    </span>
+                    <h2 className="font-serif text-5xl md:text-7xl text-[#2C4C3B] leading-[1.1]">
+                        About Us — Guzel
+                    </h2>
+                    <p className="font-sans text-lg md:text-xl text-[#1a1a1a]/70 leading-relaxed max-w-2xl mx-auto font-light">
+                        Guzel is a modern art and framing studio that transforms art and memories into timeless frames. From handpicked paintings to custom keepsakes, every piece is created to bring warmth, culture, and personality into your space. Inspired by the Turkish word <span className="text-[#2C4C3B] font-medium italic">“Güzel,”</span> meaning beautiful, lovely, and pleasant, our name reflects everything we stand for: beauty in simplicity, warmth in spaces, and meaning in every detail.
+                    </p>
+                </motion.div>
+
+                {/* The Story: With Organic Blob Background */}
+                <div className="relative">
+                    {/* Blurred Organic Shape */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#2C4C3B]/5 rounded-full blur-[100px] -z-10" />
+
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95, rotate: -2 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: -1 }}
+                        viewport={{ once: false }}
+                        transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+                        className="text-center space-y-8 max-w-3xl mx-auto bg-[#F2EBE3] p-12 md:p-16 relative shadow-[2px_4px_24px_rgba(44,76,59,0.08)] transform origin-center"
+                        style={{
+                            borderRadius: "2px 24px 4px 32px",
+                        }}
+                    >
+                        {/* Paper Texture Overlay */}
+                        <div className="absolute inset-0 opacity-[0.4] bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] pointer-events-none mix-blend-multiply rounded-[inherit]" />
+
+                        <div className="relative z-10 space-y-8">
+                            <h3 className="font-serif text-3xl md:text-5xl text-[#2C4C3B] italic">
+                                The Story
+                            </h3>
+                            <div className="w-16 h-px bg-[#2C4C3B]/20 mx-auto" />
+                            <p className="font-sans text-lg md:text-xl text-[#3e5e4e] leading-relaxed font-light">
+                                Born from a love for art and storytelling, Guzel began with a simple idea — to preserve life’s most beautiful moments through color, texture, and design. Each creation reflects a blend of heritage and modern minimalism.
+                            </p>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    )
+}
+
+function PromiseSection() {
+    return (
+        <section className="py-24 px-4 md:px-6 relative bg-[#F9F8F4]">
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-100px" }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                className="max-w-5xl mx-auto bg-[#2C4C3B] rounded-[20px] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-[#2C4C3B]/20 transform transition-transform"
+            >
+                {/* Subtle Texture */}
+                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay pointer-events-none" />
+
+                <div className="relative z-10 space-y-10">
+                    <h2 className="font-serif text-3xl md:text-6xl text-[#F9F8F4] mb-8">
+                        Our Promise
+                    </h2>
+                    <div className="space-y-4">
+                        {/* Cascading Text Effect */}
+                        {[
+                            "We believe in beautifying spaces with meaning —",
+                            "in creating pieces that feel personal,",
+                            "thoughtful, and lasting.",
+                            "That’s why every Guzel frame is thoughtfully crafted,",
+                            "high-quality, and meaningful,",
+                            "made to last and made to connect."
+                        ].map((line, i) => (
+                            <motion.p
+                                key={i}
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: false }}
+                                transition={{ duration: 0.8, delay: i * 0.15, ease: "easeOut" }}
+                                className="font-sans text-lg md:text-2xl text-[#F9F8F4]/80 leading-relaxed font-light"
+                            >
+                                {line}
+                            </motion.p>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+    )
+}
+
+function OfferingsSection() {
+    const offers = [
+        { title: "Custom Framing", desc: "For art, photos, and prints", delay: 0 },
+        { title: "Curated Collections", desc: "Of wall art", delay: 0.2 },
+        { title: "Thoughtful Décor", desc: "That brightens up your spaces", delay: 0.4 },
+    ]
+
+    return (
+        <section className="py-32 px-6 bg-[#F9F8F4]">
+            <div className="max-w-7xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="text-center mb-24 space-y-6"
+                >
+                    <h2 className="font-serif text-4xl md:text-6xl text-[#2C4C3B]">
+                        What We Offer
+                    </h2>
+                    <p className="font-sans text-lg text-[#1a1a1a]/60 max-w-2xl mx-auto font-light">
+                        From minimalist to classic, every Guzel frame is crafted to complement your walls and your space. We bring a balance of artisan craftsmanship and modern elegance.
+                    </p>
+                </motion.div>
+
+                <div className="grid md:grid-cols-3 gap-8">
+                    {offers.map((offer, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: false }}
+                            transition={{ duration: 0.8, delay: offer.delay, ease: "easeOut" }}
+                            className="group p-10 md:p-14 bg-white rounded-[2px] border border-transparent hover:border-[#2C4C3B]/10 hover:bg-[#E8EDE9] transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-xl hover:shadow-[#2C4C3B]/5 cursor-default text-center"
+                        >
+                            <h3 className="font-serif text-3xl text-[#2C4C3B] mb-6 mb-8">
+                                {offer.title}
+                            </h3>
+                            <div className="w-12 h-px bg-[#2C4C3B]/20 mx-auto mb-8 group-hover:w-24 group-hover:bg-[#2C4C3B]/40 transition-all duration-500" />
+                            <p className="font-sans text-[#1a1a1a]/70 text-lg group-hover:text-[#2C4C3B]/80 transition-colors duration-300">
+                                {offer.desc}
+                            </p>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </section>
     )
 }

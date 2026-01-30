@@ -1,10 +1,9 @@
 "use client";
-export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Plus, Save, Search, Trash2, Edit2, Package, Tag, Layers, Image as ImageIcon, Sparkles, Lock } from 'lucide-react';
+import { Loader2, Plus, Save, Search, Trash2, Edit2, Package, Tag, Layers, Image as ImageIcon, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
 // Types matching lib/data.ts
@@ -95,8 +94,7 @@ const Sidebar = ({
     setSelectedProduct,
     loading,
     filteredProducts,
-    selectedProduct,
-    emptyProduct // Passed as prop to avoid closure issues
+    selectedProduct
 }: any) => (
     <div className="w-80 border-r border-stone-200 h-screen bg-stone-50 flex flex-col fixed left-0 top-0 z-10">
         <div className="p-6 border-b border-stone-200 bg-stone-50">
@@ -145,12 +143,6 @@ const Sidebar = ({
 );
 
 export default function DashboardPage() {
-    // Client-side lock: Always true on mount/reload
-    const [isLocked, setIsLocked] = useState(true);
-    const [passwordInput, setPasswordInput] = useState("");
-    const [loginError, setLoginError] = useState("");
-    const [checkingAuth, setCheckingAuth] = useState(false);
-
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
@@ -158,43 +150,13 @@ export default function DashboardPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [activeTab, setActiveTab] = useState<'basic' | 'details' | 'media' | 'variants' | 'sizes'>('basic');
 
-    // Handle Client-Side Login
-    const handleUnlock = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setCheckingAuth(true);
-        setLoginError("");
-
-        try {
-            // Re-verify with server to ensure credentials are still valid and set cookie for APIs
-            const res = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username: "admin", password: passwordInput }), // Assuming admin username
-            });
-
-            if (res.ok) {
-                setIsLocked(false);
-                fetchProducts(); // Load data after unlock
-            } else {
-                setLoginError("Invalid password");
-            }
-        } catch (err) {
-            setLoginError("Error verifying credentials");
-        } finally {
-            setCheckingAuth(false);
-        }
-    };
-
     useEffect(() => {
-        if (!isLocked) {
-            fetchProducts();
-        }
-    }, [isLocked]);
+        fetchProducts();
+    }, []);
 
     const fetchProducts = async () => {
         try {
             const res = await fetch('/api/products');
-            if (res.status === 401) return; // Middleware might block
             const data = await res.json();
             setProducts(data);
         } catch (error) {
@@ -204,25 +166,8 @@ export default function DashboardPage() {
         }
     };
 
-    // Auto-generate slug from title if slug is empty
-    useEffect(() => {
-        if (selectedProduct && selectedProduct.title && !selectedProduct.slug) {
-            const generatedSlug = selectedProduct.title
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-            updateField('slug', generatedSlug);
-        }
-    }, [selectedProduct?.title]);
-
     const handleSave = async () => {
         if (!selectedProduct) return;
-
-        // Validation: Title and Slug are required
-        if (!selectedProduct.title.trim() || !selectedProduct.slug.trim()) {
-            alert('Error: Title and Slug are required.');
-            return;
-        }
 
         // Validation: Unique Size IDs
         if (selectedProduct.sizes) {
@@ -289,59 +234,20 @@ export default function DashboardPage() {
     );
 
     const updateField = (field: keyof Product, value: any) => {
-        setSelectedProduct(prev => {
-            if (!prev) return null;
-            return { ...prev, [field]: value };
-        });
+        if (!selectedProduct) return;
+        setSelectedProduct({ ...selectedProduct, [field]: value });
     };
 
     const updateSpec = (field: keyof Specs, value: string) => {
-        setSelectedProduct(prev => {
-            if (!prev) return null;
-            return {
-                ...prev,
-                specs: { ...prev.specs, [field]: value }
-            };
+        if (!selectedProduct) return;
+        setSelectedProduct({
+            ...selectedProduct,
+            specs: { ...selectedProduct.specs, [field]: value }
         });
     };
 
-    // Strict Lock Check
-    if (isLocked) {
-        return (
-            <div className="min-h-screen bg-stone-50 flex items-center justify-center p-4">
-                <div className="max-w-sm w-full bg-white rounded-xl shadow-lg border border-stone-100 p-8">
-                    <div className="text-center mb-6">
-                        <div className="w-12 h-12 bg-stone-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <Lock className="w-6 h-6 text-white" />
-                        </div>
-                        <h2 className="text-xl font-bold text-stone-900">Dashboard Locked</h2>
-                        <p className="text-stone-500 text-sm mt-1">Enter password to access</p>
-                    </div>
+    // UI Components removed from here
 
-                    <form onSubmit={handleUnlock} className="space-y-4">
-                        <div>
-                            <input
-                                type="password"
-                                value={passwordInput}
-                                onChange={(e) => setPasswordInput(e.target.value)}
-                                className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-stone-900 transition-all font-medium text-center tracking-widest"
-                                placeholder="••••••••"
-                                autoFocus
-                            />
-                        </div>
-                        {loginError && <p className="text-red-500 text-xs text-center font-medium">{loginError}</p>}
-                        <button
-                            type="submit"
-                            disabled={checkingAuth}
-                            className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors flex justify-center"
-                        >
-                            {checkingAuth ? <Loader2 className="w-5 h-5 animate-spin" /> : "Unlock Dashboard"}
-                        </button>
-                    </form>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen bg-white text-stone-900 font-sans pl-80">
@@ -352,7 +258,6 @@ export default function DashboardPage() {
                 loading={loading}
                 filteredProducts={filteredProducts}
                 selectedProduct={selectedProduct}
-                emptyProduct={emptyProduct}
             />
 
             {selectedProduct ? (
@@ -423,26 +328,12 @@ export default function DashboardPage() {
                                     >
                                         <option value="">Select Category</option>
                                         {[
-                                            "Oil Paintings",
-                                            "Canvas Prints",
-                                            "Mirrors",
-                                            "Calligraphy",
-                                            "Landscape Paintings",
-                                            "Abstract Art",
-                                            "Medium Sized Classics",
-                                            "Framed Sets",
-                                            "Feature Frames",
-                                            "Tile Framed",
-                                            "Rumi Dance",
-                                            "Contemporary Figurative Art",
-                                            "Statement Pieces",
-                                            "Mini Frames",
-                                            "Gallery Walls",
-                                            "Trays",
-                                            "Grand Masters",
-                                            "All Frames",
-                                            "Wooden Frames",
-                                            "Empty Frames"
+                                            "Wood Frames",
+                                            "Painted Frames",
+                                            "Metal Frames",
+                                            "Art Prints",
+                                            "Home Decor",
+                                            "Mirrors"
                                         ].map(cat => (
                                             <option key={cat} value={cat}>{cat}</option>
                                         ))}

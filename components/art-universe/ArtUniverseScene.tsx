@@ -7,6 +7,8 @@ import ArtCloud from "./ArtCloud"
 import ArtProvenanceScroll from "./ArtProvenanceScroll"
 
 
+import Footer from "@/components/Footer"
+
 export default function ArtUniverseScene() {
     return (
         <>
@@ -19,7 +21,7 @@ export default function ArtUniverseScene() {
 
 
 
-            <ScrollControls pages={12.6} damping={0.2}>
+            <ScrollControls pages={12.9} damping={0.2}>
 
 
                 {/* The 3D Scrollable Content */}
@@ -99,6 +101,9 @@ export default function ArtUniverseScene() {
                     <div style={{ height: '500vh' }} className="pointer-events-none" />
 
                     <ArtProvenanceScroll />
+
+                    {/* Manual Footer Injection */}
+                    <Footer />
 
                 </Scroll>
             </ScrollControls>

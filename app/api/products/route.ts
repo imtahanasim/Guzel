@@ -1,21 +1,24 @@
 import { NextResponse } from 'next/server';
-import { getProducts, saveProduct } from '@/lib/products';
+import { PRODUCTS } from '@/lib/data';
+import fs from 'fs';
+import path from 'path';
 
 export async function GET() {
-    const products = await getProducts();
-    return NextResponse.json(products);
+    return NextResponse.json(PRODUCTS);
 }
 
 export async function POST(request: Request) {
     try {
         const products = await request.json();
 
-        // Handle both single product and array of products for backward compatibility
-        const productList = Array.isArray(products) ? products : [products];
+        // Format the products array as a TypeScript string
+        const fileContent = `export const PRODUCTS = ${JSON.stringify(products, null, 4)};\n`;
 
-        for (const product of productList) {
-            await saveProduct(product);
-        }
+        // Path to lib/data.ts
+        const filePath = path.join(process.cwd(), 'lib', 'data.ts');
+
+        // Write the new content to the file
+        fs.writeFileSync(filePath, fileContent, 'utf-8');
 
         return NextResponse.json({ success: true, message: 'Products updated successfully' });
     } catch (error) {

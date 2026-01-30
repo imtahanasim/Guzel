@@ -7,7 +7,8 @@ import ProductCard from "@/components/ProductCard"
 import { useSearchParams, useRouter } from "next/navigation"
 
 // --- TYPES ---
-type Category = "All" | "Oil Paintings" | "Canvas Prints" | "Mirrors" | "Calligraphy" | "Landscape Paintings" | "Abstract Art" | "Gallery Walls" | "Trays" | "Grand Masters" | "All Frames" | "Wooden Frames" | "Metal Frames" | "Empty Frames"
+// --- TYPES ---
+type Category = "All" | "Oil Paintings" | "Canvas Prints" | "Mirrors" | "Calligraphy" | "Landscape Paintings" | "Abstract Art" | "Medium Sized Classics" | "Framed Sets" | "Feature Frames" | "Tile Framed" | "Rumi Dance" | "Contemporary Figurative Art" | "Statement Pieces" | "Mini Frames" | "Gallery Walls" | "Trays" | "Grand Masters" | "All Frames" | "Wooden Frames" | "Empty Frames"     
 
 const CATEGORIES: Category[] = [
     "All",
@@ -17,12 +18,19 @@ const CATEGORIES: Category[] = [
     "Calligraphy",
     "Landscape Paintings",
     "Abstract Art",
+    "Medium Sized Classics",
+    "Framed Sets",
+    "Feature Frames",
+    "Tile Framed",
+    "Rumi Dance",
+    "Contemporary Figurative Art",
+    "Statement Pieces",
+    "Mini Frames",
     "Gallery Walls",
     "Trays",
     "Grand Masters",
     "All Frames",
     "Wooden Frames",
-    "Metal Frames",
     "Empty Frames"
 ]
 
@@ -67,23 +75,8 @@ export default function ShopCatalog() {
         ? PRODUCTS
         : PRODUCTS.filter(p => {
             const cat = p.category
-            const title = p.title
-
-            if (activeCategory === "Oil Paintings") return cat === "Oil Paintings"
-            if (activeCategory === "Canvas Prints") return cat === "Canvas Prints" || cat === "Art Prints"
-            if (activeCategory === "Mirrors") return cat === "Mirrors"
-            if (activeCategory === "Calligraphy") return cat === "Calligraphy"
-            if (activeCategory === "Landscape Paintings") return cat === "Landscape Paintings" || title.toLowerCase().includes("landscape") || title.toLowerCase().includes("valley")
-            if (activeCategory === "Abstract Art") return cat === "Abstract Art"
-            if (activeCategory === "Gallery Walls") return cat === "Gallery Walls" || title.includes("Gallery")
-            if (activeCategory === "Trays") return cat === "Trays"
-            if (activeCategory === "Grand Masters") return cat === "Grand Masters"
-            if (activeCategory === "All Frames") return cat.includes("Frames") || cat.includes("Wood") || cat.includes("Metal")
-            if (activeCategory === "Wooden Frames") return cat.includes("Wood") || cat.includes("Painted")
-            if (activeCategory === "Metal Frames") return cat.includes("Metal") || cat.includes("Steel")
-            if (activeCategory === "Empty Frames") return cat === "Empty Frames"
-
-            return false
+            // Flexible matching: Exact match OR partial match for broader categories
+            return cat === activeCategory || cat.includes(activeCategory)
         })
 
     return (

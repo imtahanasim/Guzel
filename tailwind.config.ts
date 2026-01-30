@@ -61,7 +61,7 @@ const config = {
       },
       fontFamily: {
         serif: ['var(--font-playfair)', 'serif'],
-        sans: ['var(--font-inter)', 'sans-serif'],
+        sans: ['var(--font-geist-sans)', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {

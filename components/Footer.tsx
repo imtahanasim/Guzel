@@ -74,6 +74,7 @@ export default function Footer() {
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState("")
   const [supportOpen, setSupportOpen] = useState(false)
+  const [theStudioOpen, setTheStudioOpen] = useState(false)
   const [studioOpen, setStudioOpen] = useState(false)
 
   const validateEmail = (email: string) => {
@@ -100,9 +101,16 @@ export default function Footer() {
   const supportLinks = [
     { label: "Shipping & Delivery", href: "/policies?tab=shipping" },
     { label: "Track My Order", href: "https://merchantapi.leopardscourier.com/track" },
-    { label: "Returns & Exchanges", href: "/policies?tab=returns" },
+    { label: "Refund Policy", href: "/policies?tab=returns" },
     { label: "Privacy Policy", href: "/policies?tab=privacy" },
-    { label: "Terms & Conditions", href: "/policies?tab=terms" },
+    { label: "Terms of Service", href: "/policies?tab=terms" },
+  ]
+
+  const theStudioLinks = [
+    { label: "Our Story", href: "/about" },
+    { label: "Visit the Studio", href: "/visit-studio" },
+    { label: "B2B/Corporate Orders", href: "/contact" },
+    { label: "Contact Us", href: "/contact" },
   ]
 
   const studioLinks = [
@@ -115,37 +123,17 @@ export default function Footer() {
     <footer className="bg-[#3D5C3D] text-[#FFF9EF]">
       <div className="container mx-auto px-4 py-16 md:py-20 mt-20">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-12">
-          {/* Column 1: Brand & Ethos */}
-          <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-y-12 lg:gap-x-8 mb-12">
+          {/* Column 1: Brand & Ethos (Spans 3 cols) */}
+          <div className="space-y-4 lg:col-span-3">
             <h3 className="font-serif text-3xl md:text-4xl">Guzel.</h3>
             <p className="text-sm text-[#FFF9EF]/90 leading-relaxed max-w-xs">
-              Artisan custom framing and curated art for your home. Handcrafted
-              in Islamabad.
+              Güzel is a handcrafted framing studio creating timeless pieces that capture beauty in every form; turning art, memories, and emotions into frames that bring warmth, elegance, and meaning to every space.
             </p>
           </div>
 
-          {/* Column 2: Support (Mobile Accordion) */}
-          <div className="md:block hidden">
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-              Customer Care
-            </h4>
-            <ul className="space-y-3">
-              {supportLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-[#FFF9EF]/80 hover:text-[#FFF9EF] transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Mobile Accordion for Support */}
-          <div className="md:hidden">
+          {/* Mobile Accordions (Hidden on Desktop) */}
+          <div className="md:hidden col-span-1 space-y-2">
             <Accordion
               title="Customer Care"
               isOpen={supportOpen}
@@ -164,29 +152,24 @@ export default function Footer() {
                 ))}
               </ul>
             </Accordion>
-          </div>
-
-          {/* Column 3: The Studio (Mobile Accordion) */}
-          <div className="md:block hidden">
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
-              Connect
-            </h4>
-            <ul className="space-y-3">
-              {studioLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-[#FFF9EF]/80 hover:text-[#FFF9EF] transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Mobile Accordion for Studio */}
-          <div className="md:hidden">
+            <Accordion
+              title="The Studio"
+              isOpen={theStudioOpen}
+              onToggle={() => setTheStudioOpen(!theStudioOpen)}
+            >
+              <ul className="space-y-3">
+                {theStudioLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-[#FFF9EF]/80 hover:text-[#FFF9EF] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Accordion>
             <Accordion
               title="Connect"
               isOpen={studioOpen}
@@ -207,8 +190,68 @@ export default function Footer() {
             </Accordion>
           </div>
 
-          {/* Column 4: Newsletter */}
-          <div className="space-y-4">
+          {/* Desktop Links Wrapper (Spans 5 cols, starts at col 5 for spacing) */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6 lg:col-span-6 lg:col-start-5">
+            {/* Column 2: Support */}
+            <div>
+              <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+                Customer Care
+              </h4>
+              <ul className="space-y-3">
+                {supportLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-[#FFF9EF]/80 hover:text-[#FFF9EF] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 3: The Studio */}
+            <div>
+              <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+                The Studio
+              </h4>
+              <ul className="space-y-3">
+                {theStudioLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-[#FFF9EF]/80 hover:text-[#FFF9EF] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 4: Connect */}
+            <div>
+              <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+                Connect
+              </h4>
+              <ul className="space-y-3">
+                {studioLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-[#FFF9EF]/80 hover:text-[#FFF9EF] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Column 5: Newsletter (Spans 3 cols) */}
+          <div className="space-y-4 lg:col-span-3">
             <h4 className="text-sm font-semibold uppercase tracking-wider">
               Join the List
             </h4>
