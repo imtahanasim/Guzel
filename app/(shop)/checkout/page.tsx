@@ -60,10 +60,7 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>
 export default function CheckoutPage() {
   const router = useRouter()
   const items = useCartStore((state) => state.items)
-<<<<<<< HEAD
   const setCheckoutFormData = useCartStore((state) => state.setCheckoutFormData)
-=======
->>>>>>> 926995b6dac17405966fbf4bafa27230e78c95a6
   const [isProcessing, setIsProcessing] = useState(false)
 
   const {
@@ -100,18 +97,8 @@ export default function CheckoutPage() {
   }
 
   const onSubmit = async (data: CheckoutFormData) => {
-<<<<<<< HEAD
     setCheckoutFormData(data)
     router.push("/checkout/confirm")
-=======
-    setIsProcessing(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
-    // Redirect to success page
-    router.push("/checkout/success")
->>>>>>> 926995b6dac17405966fbf4bafa27230e78c95a6
   }
 
   return (

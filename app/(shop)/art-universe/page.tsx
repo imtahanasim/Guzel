@@ -5,7 +5,6 @@ import { Canvas } from "@react-three/fiber"
 import ArtUniverseScene from "@/components/art-universe/ArtUniverseScene"
 import ArtistDoodleLayer from "@/components/art-universe/ArtistDoodleLayer"
 
-<<<<<<< HEAD
 import Header from "@/components/Header"
 
 export default function ArtUniversePage() {
@@ -13,12 +12,6 @@ export default function ArtUniversePage() {
         <div className="h-screen w-full bg-[#1e1e1e] relative overflow-hidden">
             {/* Manual Header Injection */}
             <Header />
-
-=======
-export default function ArtUniversePage() {
-    return (
-        <div className="h-screen w-full bg-[#1e1e1e] relative">
->>>>>>> 926995b6dac17405966fbf4bafa27230e78c95a6
             {/* Hand-Drawn Doodle Overlay */}
             <ArtistDoodleLayer />
 

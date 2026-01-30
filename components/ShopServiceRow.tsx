@@ -13,11 +13,7 @@ export default function ShopServiceRow() {
                 {/* Card A: Samples */}
                 <div className="relative group overflow-hidden rounded-xl h-[400px] hover:-translate-y-1 hover:shadow-xl transition-all duration-300 ease-out cursor-pointer">
                     <Image
-<<<<<<< HEAD
                         src="/product-pictures/photo-1725711028446-055093f4c658.avif"
-=======
-                        src="/product-pictures/artisan-framing.jpg"
->>>>>>> 926995b6dac17405966fbf4bafa27230e78c95a6
                         alt="Frame Samples"
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
