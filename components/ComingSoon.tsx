@@ -40,11 +40,11 @@ export default function ComingSoon() {
                 setIsSubmitted(true)
             } else {
                 console.error(result.error)
-                alert("Something went wrong. Please try again.")
+                alert(`Error: ${result.error}`)
             }
         } catch (error) {
             console.error(error)
-            alert("Something went wrong. Please try again.")
+            alert("An unexpected error occurred.")
         } finally {
             setIsLoading(false)
         }

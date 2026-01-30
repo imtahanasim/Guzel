@@ -4,10 +4,10 @@ import {
     Head,
     Heading,
     Html,
-    Img,
     Preview,
     Section,
     Text,
+    Hr,
 } from "@react-email/components"
 import * as React from "react"
 
@@ -16,10 +16,6 @@ interface WaitlistEmailProps {
     date: string
 }
 
-const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000"
-
 export const WaitlistEmailTemplate = ({
     email,
     date,
@@ -27,31 +23,45 @@ export const WaitlistEmailTemplate = ({
     return (
         <Html>
             <Head />
-            <Preview>A new art lover has joined the waitlist.</Preview>
+            <Preview>You are on the list.</Preview>
             <Body style={main}>
                 <Container style={container}>
+                    {/* Header */}
                     <Section style={header}>
-                        <Heading style={headerTitle}>Guzel Art</Heading>
-                        <Text style={headerSubtitle}>New Waitlist Join</Text>
+                        <Heading style={brand}>GUZEL.</Heading>
+                        <Text style={subtitle}>THE EXCLUSIVE LIST</Text>
                     </Section>
 
+                    <Hr style={divider} />
+
+                    {/* Content */}
                     <Section style={content}>
-                        <Text style={text}>
-                            A new user has joined the waitlist for the digital experience.
+                        <Text style={bodyText}>
+                            <strong>Official Confirmation</strong>
+                            <br /><br />
+                            This digital token confirms that a new member has joined the private waitlist.
                         </Text>
 
-                        <Section style={infoBox}>
-                            <Text style={label}>Email Address</Text>
+                        <Section style={card}>
+                            <Text style={label}>MEMBER STATUS</Text>
+                            <Text style={status}>ACTIVE & VERIFIED</Text>
+
+                            <Hr style={dividerThin} />
+
+                            <Text style={label}>REGISTERED EMAIL</Text>
                             <Text style={value}>{email}</Text>
 
-                            <Text style={label}>Joined Date</Text>
+                            <Text style={label}>DATE OF ENTRY</Text>
                             <Text style={value}>{date}</Text>
                         </Section>
                     </Section>
 
+                    {/* Footer */}
                     <Section style={footer}>
                         <Text style={footerText}>
-                            This is an automated notification from Guzel Art.
+                            GUZEL ART STUDIO • ISLAMABAD
+                            <br />
+                            Privileged Access
                         </Text>
                     </Section>
                 </Container>
@@ -60,20 +70,27 @@ export const WaitlistEmailTemplate = ({
     )
 }
 
+// COLORS
+const colors = {
+    cream: "#FFF9EF",
+    green: "#3D5C3D",
+    text: "#1a1a1a",
+    muted: "#666666",
+    border: "#E6E3D5",
+}
+
+// STYLES
 const main = {
-    backgroundColor: "#f6f9fc",
-    fontFamily:
-        '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    backgroundColor: colors.cream,
+    fontFamily: '"Times New Roman", Times, serif',
 }
 
 const container = {
-    backgroundColor: "#ffffff",
-    margin: "0 auto",
-    padding: "40px 20px",
-    marginBottom: "64px",
-    maxWidth: "600px",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+    margin: "40px auto",
+    padding: "40px",
+    maxWidth: "500px",
+    backgroundColor: colors.cream,
+    border: `1px solid ${colors.green}`,
 }
 
 const header = {
@@ -81,58 +98,90 @@ const header = {
     marginBottom: "32px",
 }
 
-const headerTitle = {
-    color: "#3e523f",
+const brand = {
     fontSize: "32px",
-    fontFamily: "serif",
-    fontWeight: "bold",
+    color: colors.green,
+    letterSpacing: "4px",
+    fontWeight: "600",
     margin: "0 0 8px",
 }
 
-const headerSubtitle = {
-    color: "#666666",
-    fontSize: "16px",
-    margin: "0",
+const subtitle = {
+    fontSize: "10px",
+    color: colors.green,
+    letterSpacing: "4px",
+    textTransform: "uppercase" as const,
+    opacity: 0.8,
+}
+
+const divider = {
+    borderTop: `1px solid ${colors.green}`,
+    opacity: 0.2,
+    margin: "32px 0",
+}
+
+const dividerThin = {
+    borderTop: `1px dashed ${colors.green}`,
+    opacity: 0.3,
+    margin: "16px 0",
 }
 
 const content = {
-    marginBottom: "32px",
-}
-
-const text = {
-    color: "#333",
-    fontSize: "16px",
-    lineHeight: "26px",
-    marginBottom: "24px",
-}
-
-const infoBox = {
-    backgroundColor: "#f8f9fa",
-    padding: "24px",
-    borderRadius: "8px",
-}
-
-const label = {
-    color: "#8898aa",
-    fontSize: "12px",
-    textTransform: "uppercase" as const,
-    fontWeight: "bold",
-    marginBottom: "8px",
-}
-
-const value = {
-    color: "#333333",
-    fontSize: "16px",
-    marginBottom: "16px",
-    fontFamily: "monospace",
-}
-
-const footer = {
-    marginTop: "48px",
     textAlign: "center" as const,
 }
 
+const bodyText = {
+    fontSize: "14px",
+    lineHeight: "1.6",
+    color: colors.text,
+    fontFamily: '"Helvetica Neue", sans-serif',
+    marginBottom: "32px",
+}
+
+const card = {
+    backgroundColor: "#fff",
+    padding: "24px",
+    border: `1px solid ${colors.border}`,
+    textAlign: "left" as const,
+}
+
+const label = {
+    fontSize: "10px",
+    color: colors.muted,
+    letterSpacing: "1px",
+    fontWeight: "bold",
+    marginBottom: "4px",
+    fontFamily: '"Helvetica Neue", sans-serif',
+    textTransform: "uppercase" as const,
+    marginTop: "12px",
+}
+
+const status = {
+    fontSize: "14px",
+    color: colors.green,
+    fontWeight: "bold",
+    letterSpacing: "1px",
+    fontFamily: '"Helvetica Neue", sans-serif',
+    margin: "0",
+}
+
+const value = {
+    fontSize: "14px",
+    color: colors.text,
+    fontFamily: '"Helvetica Neue", sans-serif',
+    margin: "0",
+}
+
+const footer = {
+    textAlign: "center" as const,
+    marginTop: "40px",
+}
+
 const footerText = {
-    color: "#999999",
-    fontSize: "12px",
+    fontSize: "10px",
+    color: colors.green,
+    letterSpacing: "2px",
+    lineHeight: "1.8",
+    fontFamily: '"Helvetica Neue", sans-serif',
+    opacity: 0.6,
 }

@@ -27,16 +27,14 @@ interface OrderConfirmationEmailProps {
         quantity: number
         price: number
         frame: string
+        mount: string
         size: string
+        thumbnail: string
     }>
     total: number
     date: string
     paymentMethod: string
 }
-
-const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000"
 
 export const OrderConfirmationEmail = ({
     orderId,
@@ -53,52 +51,43 @@ export const OrderConfirmationEmail = ({
     return (
         <Html>
             <Head />
-            <Preview>New Order #{orderId} from {customerName}</Preview>
+            <Preview>Order Confirmed #{orderId}</Preview>
             <Body style={main}>
                 <Container style={container}>
+                    {/* Header with Logo Area */}
                     <Section style={header}>
-                        <Heading style={headerTitle}>Guzel Art</Heading>
-                        <Text style={headerSubtitle}>Order Confirmation</Text>
+                        <Heading style={brand}>GUZEL.</Heading>
+                        <Text style={subtitle}>New Order Received</Text>
                     </Section>
 
-                    <Section style={orderInfo}>
+                    {/* Intro Note */}
+                    <Section style={introSection}>
+                        <Text style={introText}>
+                            <strong>Admin Notification</strong>
+                            <br /><br />
+                            A new order has been placed by <strong>{customerName}</strong>.
+                            <br />
+                            Please review the collection details below for fulfillment.
+                        </Text>
+                    </Section>
+
+                    <Hr style={divider} />
+
+                    {/* Order Meta */}
+                    <Section style={metaGrid}>
                         <Row>
                             <Column>
-                                <Text style={label}>Order ID</Text>
+                                <Text style={label}>ORDER NO.</Text>
                                 <Text style={value}>#{orderId}</Text>
                             </Column>
-                            <Column>
-                                <Text style={label}>Date</Text>
+                            <Column style={{ textAlign: "center" }}>
+                                <Text style={label}>DATE</Text>
                                 <Text style={value}>{date}</Text>
                             </Column>
-                        </Row>
-                    </Section>
-
-                    <Hr style={divider} />
-
-                    <Section style={section}>
-                        <Heading as="h2" style={sectionTitle}>
-                            Customer Details
-                        </Heading>
-                        <Row>
-                            <Column>
-                                <Text style={label}>Name</Text>
-                                <Text style={value}>{customerName}</Text>
-                                <Text style={label}>Email</Text>
-                                <Text style={value}>{email}</Text>
-                                <Text style={label}>Phone</Text>
-                                <Text style={value}>{phone}</Text>
-                            </Column>
-                            <Column>
-                                <Text style={label}>Shipping Address</Text>
+                            <Column style={{ textAlign: "right" }}>
+                                <Text style={label}>PAYMENT</Text>
                                 <Text style={value}>
-                                    {address}
-                                    <br />
-                                    {city}
-                                </Text>
-                                <Text style={label}>Payment Method</Text>
-                                <Text style={value}>
-                                    {paymentMethod === "cod" ? "Cash on Delivery" : "Card"}
+                                    {paymentMethod === "cod" ? "COD" : "Paid"}
                                 </Text>
                             </Column>
                         </Row>
@@ -106,25 +95,29 @@ export const OrderConfirmationEmail = ({
 
                     <Hr style={divider} />
 
-                    <Section style={section}>
-                        <Heading as="h2" style={sectionTitle}>
-                            Order Items
-                        </Heading>
+                    {/* Items List */}
+                    <Section style={itemsSection}>
+                        <Text style={sectionTitle}>YOUR COLLECTION</Text>
                         {items.map((item, index) => (
                             <Row key={index} style={itemRow}>
-                                <Column style={{ width: "60%" }}>
+                                <Column style={{ width: "80px", paddingRight: "20px" }}>
+                                    <Img
+                                        src={item.thumbnail}
+                                        width="80"
+                                        height="80"
+                                        alt={item.title}
+                                        style={thumbnail}
+                                    />
+                                </Column>
+                                <Column>
                                     <Text style={itemTitle}>{item.title}</Text>
                                     <Text style={itemMeta}>
-                                        {item.size} | {item.frame} Frame
+                                        {item.size} • {item.frame} Frame • {item.mount} Mount
                                     </Text>
                                 </Column>
-                                <Column style={{ width: "20%", textAlign: "right" }}>
-                                    <Text style={itemMeta}>x{item.quantity}</Text>
-                                </Column>
-                                <Column style={{ width: "20%", textAlign: "right" }}>
-                                    <Text style={itemPrice}>
-                                        PKR {(item.price * item.quantity).toLocaleString()}
-                                    </Text>
+                                <Column style={{ textAlign: "right", verticalAlign: "top" }}>
+                                    <Text style={itemPrice}>PKR {(item.price * item.quantity).toLocaleString()}</Text>
+                                    <Text style={itemQty}>Qty: {item.quantity}</Text>
                                 </Column>
                             </Row>
                         ))}
@@ -132,20 +125,45 @@ export const OrderConfirmationEmail = ({
 
                     <Hr style={divider} />
 
-                    <Section style={totalSection}>
+                    {/* Summary */}
+                    <Section>
                         <Row>
-                            <Column style={{ width: "80%", textAlign: "right" }}>
-                                <Text style={totalLabel}>Total Amount:</Text>
+                            <Column style={{ width: "60%" }}>
+                                {/* Shipping Address */}
+                                <Text style={label}>SHIPPING TO</Text>
+                                <Text style={addressText}>
+                                    {address}
+                                    <br />
+                                    {city}
+                                </Text>
+                                <Text style={contactText}>
+                                    {phone} | {email}
+                                </Text>
                             </Column>
-                            <Column style={{ width: "20%", textAlign: "right" }}>
-                                <Text style={totalValue}>PKR {total.toLocaleString()}</Text>
+                            <Column style={{ width: "40%", paddingLeft: "20px" }}>
+                                <Row style={summaryRow}>
+                                    <Column><Text style={summaryLabel}>SUBTOTAL</Text></Column>
+                                    <Column style={{ textAlign: "right" }}><Text style={summaryValue}>PKR {total.toLocaleString()}</Text></Column>
+                                </Row>
+                                <Row style={summaryRow}>
+                                    <Column><Text style={summaryLabel}>SHIPPING</Text></Column>
+                                    <Column style={{ textAlign: "right" }}><Text style={summaryValue}>Free</Text></Column>
+                                </Row>
+                                <Hr style={dividerThin} />
+                                <Row>
+                                    <Column><Text style={totalLabel}>TOTAL</Text></Column>
+                                    <Column style={{ textAlign: "right" }}><Text style={totalValue}>PKR {total.toLocaleString()}</Text></Column>
+                                </Row>
                             </Column>
                         </Row>
                     </Section>
 
+                    {/* Footer */}
                     <Section style={footer}>
                         <Text style={footerText}>
-                            This is an automated message from Guzel Art Order System.
+                            GUZEL ART STUDIO • ISLAMABAD
+                            <br />
+                            <Link href="https://guzelart.com" style={link}>www.guzelart.com</Link>
                         </Text>
                     </Section>
                 </Container>
@@ -154,131 +172,210 @@ export const OrderConfirmationEmail = ({
     )
 }
 
+// COLORS
+const colors = {
+    cream: "#FFF9EF",
+    green: "#3D5C3D",
+    text: "#1a1a1a",
+    muted: "#666666",
+    border: "#E6E3D5",
+}
+
+// STYLES
 const main = {
-    backgroundColor: "#f6f9fc",
-    fontFamily:
-        '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    backgroundColor: colors.cream,
+    fontFamily: '"Times New Roman", Times, serif',
 }
 
 const container = {
-    backgroundColor: "#ffffff",
     margin: "0 auto",
-    padding: "40px 20px",
-    marginBottom: "64px",
+    padding: "40px",
     maxWidth: "600px",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+    backgroundColor: colors.cream,
 }
 
 const header = {
     textAlign: "center" as const,
-    marginBottom: "32px",
+    marginBottom: "40px",
 }
 
-const headerTitle = {
-    color: "#3e523f",
-    fontSize: "32px",
-    fontFamily: "serif",
-    fontWeight: "bold",
+const brand = {
+    fontSize: "36px",
+    color: colors.green,
+    letterSpacing: "4px",
+    fontWeight: "600",
     margin: "0 0 8px",
 }
 
-const headerSubtitle = {
-    color: "#666666",
-    fontSize: "16px",
+const subtitle = {
+    fontSize: "12px",
+    color: colors.green,
+    letterSpacing: "3px",
+    textTransform: "uppercase" as const,
+    opacity: 0.8,
     margin: "0",
+    fontFamily: '"Helvetica Neue", sans-serif',
 }
 
-const section = {
+const introSection = {
     marginBottom: "32px",
+    textAlign: "center" as const,
 }
 
-const sectionTitle = {
-    color: "#333333",
-    fontSize: "18px",
-    fontWeight: "bold",
-    marginBottom: "16px",
-    borderBottom: "2px solid #3e523f",
-    paddingBottom: "8px",
-    display: "inline-block",
+const introText = {
+    fontSize: "16px",
+    lineHeight: "1.8",
+    color: colors.text,
+    fontFamily: '"Helvetica Neue", sans-serif',
 }
 
-const orderInfo = {
-    marginBottom: "24px",
+const divider = {
+    borderTop: `1px solid ${colors.green}`,
+    opacity: 0.2,
+    margin: "32px 0",
+}
+
+const dividerThin = {
+    borderTop: `1px solid ${colors.green}`,
+    opacity: 0.2,
+    margin: "12px 0",
+}
+
+const metaGrid = {
+    marginBottom: "0",
 }
 
 const label = {
-    color: "#8898aa",
-    fontSize: "12px",
-    textTransform: "uppercase" as const,
+    fontSize: "10px",
+    color: colors.green,
+    letterSpacing: "1.5px",
     fontWeight: "bold",
-    marginBottom: "4px",
+    marginBottom: "6px",
+    fontFamily: '"Helvetica Neue", sans-serif',
 }
 
 const value = {
-    color: "#333333",
     fontSize: "14px",
-    marginBottom: "16px",
-    lineHeight: "1.4",
+    color: colors.text,
+    fontWeight: "500",
+    fontFamily: '"Helvetica Neue", sans-serif',
+}
+
+const itemsSection = {
+    marginBottom: "20px",
+}
+
+const sectionTitle = {
+    fontSize: "18px",
+    color: colors.green,
+    fontFamily: '"Times New Roman", Times, serif',
+    fontStyle: "italic",
+    marginBottom: "24px",
+    textAlign: "center" as const,
 }
 
 const itemRow = {
-    marginBottom: "16px",
-    borderBottom: "1px solid #f0f0f0",
-    paddingBottom: "16px",
+    marginBottom: "24px",
+}
+
+const thumbnail = {
+    borderRadius: "2px",
+    objectFit: "cover" as const,
+    border: `1px solid ${colors.green}20`,
 }
 
 const itemTitle = {
-    color: "#333333",
-    fontSize: "14px",
+    fontSize: "16px",
+    color: colors.green,
+    fontFamily: '"Times New Roman", Times, serif',
     fontWeight: "bold",
     margin: "0 0 4px",
 }
 
 const itemMeta = {
-    color: "#666666",
     fontSize: "12px",
+    color: colors.muted,
+    fontFamily: '"Helvetica Neue", sans-serif',
+    lineHeight: "1.5",
     margin: "0",
 }
 
 const itemPrice = {
-    color: "#333333",
     fontSize: "14px",
+    color: colors.text,
+    fontFamily: '"Helvetica Neue", sans-serif',
     fontWeight: "bold",
+    margin: "0 0 4px",
+}
+
+const itemQty = {
+    fontSize: "12px",
+    color: colors.muted,
+    fontFamily: '"Helvetica Neue", sans-serif',
     margin: "0",
 }
 
-const divider = {
-    borderTop: "1px solid #e6ebf1",
-    margin: "32px 0",
+const summaryRow = {
+    marginBottom: "8px",
 }
 
-const totalSection = {
-    backgroundColor: "#f8f9fa",
-    padding: "20px",
-    borderRadius: "4px",
+const summaryLabel = {
+    fontSize: "10px",
+    color: colors.muted,
+    letterSpacing: "1px",
+    fontFamily: '"Helvetica Neue", sans-serif',
+}
+
+const summaryValue = {
+    fontSize: "14px",
+    color: colors.text,
+    fontFamily: '"Helvetica Neue", sans-serif',
 }
 
 const totalLabel = {
-    color: "#666666",
-    fontSize: "14px",
+    fontSize: "12px",
+    color: colors.green,
+    letterSpacing: "1px",
     fontWeight: "bold",
-    margin: "0",
+    fontFamily: '"Helvetica Neue", sans-serif',
 }
 
 const totalValue = {
-    color: "#3e523f",
     fontSize: "18px",
+    color: colors.green,
     fontWeight: "bold",
-    margin: "0",
+    fontFamily: '"Times New Roman", Times, serif',
+}
+
+const addressText = {
+    fontSize: "14px",
+    color: colors.text,
+    lineHeight: "1.5",
+    fontFamily: '"Helvetica Neue", sans-serif',
+    marginBottom: "8px",
+}
+
+const contactText = {
+    fontSize: "12px",
+    color: colors.muted,
+    fontFamily: '"Helvetica Neue", sans-serif',
 }
 
 const footer = {
-    marginTop: "48px",
     textAlign: "center" as const,
+    marginTop: "60px",
 }
 
 const footerText = {
-    color: "#999999",
-    fontSize: "12px",
+    fontSize: "10px",
+    color: colors.green,
+    letterSpacing: "2px",
+    lineHeight: "1.8",
+    fontFamily: '"Helvetica Neue", sans-serif',
+    opacity: 0.6,
+}
+
+const link = {
+    color: colors.green,
+    textDecoration: "none",
 }

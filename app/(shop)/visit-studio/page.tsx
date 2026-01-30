@@ -31,10 +31,12 @@ export default function VisitStudioPage() {
                             Text us to schedule a visit or ask quick questions.
                         </p>
                         <Link
-                            href="https://wa.me/923000000000" // Replace with actual number if known, otherwise placeholder
+                            href="https://wa.me/923035241515"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="inline-block px-6 py-3 bg-[#3D5C3D] text-[#FFF9EF] text-sm font-bold uppercase tracking-wider rounded hover:bg-[#2A3F2A] transition-colors"
                         >
-                            Chat on WhatsApp
+                            Chat (+92 303 5241515)
                         </Link>
                     </div>
 

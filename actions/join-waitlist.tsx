@@ -5,7 +5,7 @@ import { WaitlistEmailTemplate } from "@/components/emails/WaitlistEmailTemplate
 
 // Initialize Resend with API Key
 // TODO: Replace with your actual API Key or environment variable
-const resend = new Resend("re_dnB4L69u_EKTSaTKwrP3FSVCrBfHpPYVa")
+const resend = new Resend("re_YPmUvPSm_GjmfgnWaiJJR1Yj4qyUCn7kZ")
 
 export async function joinWaitlist(email: string) {
     try {
@@ -28,9 +28,11 @@ export async function joinWaitlist(email: string) {
         // Send email to Admin
         const adminEmail = await resend.emails.send({
             from: "Guzel Art <onboarding@resend.dev>",
-            to: "xyzabc07005@gmail.com", // Keeping consistent with place-order.tsx
-            subject: `New Waitlist Signup - ${email}`,
+            to: "guzel.printmallislamabad@gmail.com", // Keeping consistent with place-order.tsx
+            subject: `Waitlist Confirmation: ${email}`,
             react: emailContent,
+            text: `New waitlist signup confirmed for ${email} on ${date}.`,
+            replyTo: email,
         })
 
         if (adminEmail.error) {
@@ -38,7 +40,7 @@ export async function joinWaitlist(email: string) {
             return { success: false, error: adminEmail.error.message }
         }
 
-        return { success: true }
+        return { success: true, id: adminEmail.data?.id }
     } catch (error) {
         console.error("Join Waitlist Error:", error)
         return { success: false, error: "Failed to join waitlist" }

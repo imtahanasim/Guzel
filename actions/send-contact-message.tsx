@@ -6,7 +6,7 @@ import { ContactEmailTemplate } from "@/components/emails/ContactEmailTemplate"
 
 // Initialize Resend with API Key
 // TODO: Replace with your actual API Key or environment variable
-const resend = new Resend("re_dnB4L69u_EKTSaTKwrP3FSVCrBfHpPYVa")
+const resend = new Resend("re_YPmUvPSm_GjmfgnWaiJJR1Yj4qyUCn7kZ")
 
 interface ContactFormState {
     success: boolean
@@ -65,7 +65,7 @@ export async function sendContactMessage(prevState: any, formData: FormData): Pr
         // Send email to Admin
         const adminEmail = await resend.emails.send({
             from: "Guzel Art <onboarding@resend.dev>",
-            to: "xyzabc07005@gmail.com", // Keeping consistent with logic
+            to: "guzel.printmallislamabad@gmail.com", // Keeping consistent with logic
             subject: `New Inquiry from ${name} - ${inquiryType}`,
             react: emailContent,
             replyTo: email, // Allow replying directly to sender

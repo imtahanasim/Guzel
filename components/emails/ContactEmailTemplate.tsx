@@ -33,52 +33,57 @@ export const ContactEmailTemplate = ({
     return (
         <Html>
             <Head />
-            <Preview>New inquiry from {name}</Preview>
+            <Preview>Correspondence from {name}</Preview>
             <Body style={main}>
-                <Container style={container}>
+                <Container style={paper}>
+                    {/* Header */}
                     <Section style={header}>
-                        <Heading style={headerTitle}>Guzel Art</Heading>
-                        <Text style={headerSubtitle}>New Contact Inquiry</Text>
+                        <Text style={stamp}>RECEIVED</Text>
+                        <Heading style={letterhead}>GUZEL ART STUDIO</Heading>
+                        <Text style={address}>
+                            Islamabad, Pakistan
+                            <br />
+                            Est. 2026
+                        </Text>
                     </Section>
 
-                    <Section style={content}>
-                        <Row style={row}>
+                    <Hr style={divider} />
+
+                    {/* Meta Data */}
+                    <Section style={metaSection}>
+                        <Row>
                             <Column>
-                                <Text style={label}>Name</Text>
-                                <Text style={value}>{name}</Text>
+                                <Text style={label}>FROM:</Text>
+                                <Text style={typewritten}>{name} &lt;{email}&gt;</Text>
+                            </Column>
+                            <Column style={{ textAlign: "right" }}>
+                                <Text style={label}>DATE:</Text>
+                                <Text style={typewritten}>{date}</Text>
                             </Column>
                         </Row>
-                        <Row style={row}>
+                        <Row style={{ marginTop: "12px" }}>
                             <Column>
-                                <Text style={label}>Email</Text>
-                                <Text style={value}>{email}</Text>
+                                <Text style={label}>SUBJECT / RE:</Text>
+                                <Text style={typewritten}>{inquiryType} ({timeline})</Text>
                             </Column>
                         </Row>
-                        <Row style={row}>
-                            <Column>
-                                <Text style={label}>Inquiry Type</Text>
-                                <Text style={value}>{inquiryType}</Text>
-                            </Column>
-                            <Column>
-                                <Text style={label}>Timeline</Text>
-                                <Text style={value}>{timeline}</Text>
-                            </Column>
-                        </Row>
-
-                        <Hr style={divider} />
-
-                        <Text style={label}>Message</Text>
-                        <Text style={messageText}>{message}</Text>
-
-                        <Hr style={divider} />
-
-                        <Text style={label}>Date Received</Text>
-                        <Text style={value}>{date}</Text>
                     </Section>
 
+                    <Hr style={dividerThin} />
+
+                    {/* Message Body */}
+                    <Section style={bodyContent}>
+                        <Text style={bodyText}>{message}</Text>
+                    </Section>
+
+                    <Hr style={dividerDouble} />
+
+                    {/* Footer */}
                     <Section style={footer}>
                         <Text style={footerText}>
-                            This is an automated notification from Guzel Art.
+                            END OF TRANSMISSION
+                            <br />
+                            Please reply directly to the sender to initiate a conversation.
                         </Text>
                     </Section>
                 </Container>
@@ -87,85 +92,108 @@ export const ContactEmailTemplate = ({
     )
 }
 
+// STYLES
 const main = {
-    backgroundColor: "#f6f9fc",
-    fontFamily:
-        '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    backgroundColor: "#e4e4e4", // Desk background
+    fontFamily: '"Courier New", Courier, monospace', // Typewriter font
+    padding: "40px 0",
 }
 
-const container = {
-    backgroundColor: "#ffffff",
+const paper = {
+    backgroundColor: "#fffdf7", // Aged paper off-white
     margin: "0 auto",
-    padding: "40px 20px",
-    marginBottom: "64px",
-    maxWidth: "600px",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+    padding: "40px 50px",
+    maxWidth: "580px",
+    borderRadius: "2px",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    border: "1px solid #d4d4d4",
 }
 
 const header = {
-    textAlign: "center" as const,
-    marginBottom: "32px",
+    marginBottom: "24px",
+    position: "relative" as const,
 }
 
-const headerTitle = {
-    color: "#3e523f",
-    fontSize: "32px",
-    fontFamily: "serif",
+const stamp = {
+    position: "absolute" as const,
+    top: "0",
+    right: "0",
+    border: "2px solid #d00",
+    color: "#d00",
+    padding: "4px 8px",
+    fontSize: "10px",
     fontWeight: "bold",
-    margin: "0 0 8px",
+    transform: "rotate(-10deg)",
+    opacity: "0.8",
 }
 
-const headerSubtitle = {
-    color: "#666666",
-    fontSize: "16px",
+const letterhead = {
+    fontSize: "20px",
+    fontWeight: "bold",
+    color: "#1a1a1a",
     margin: "0",
+    letterSpacing: "2px",
+    textTransform: "uppercase" as const,
 }
 
-const content = {
-    marginBottom: "32px",
+const address = {
+    fontSize: "10px",
+    color: "#666",
+    marginTop: "4px",
+    lineHeight: "1.4",
 }
 
-const row = {
-    marginBottom: "16px",
+const divider = {
+    borderTop: "2px solid #1a1a1a",
+    margin: "24px 0",
+}
+
+const dividerThin = {
+    borderTop: "1px dashed #999",
+    margin: "24px 0",
+}
+
+const dividerDouble = {
+    borderTop: "3px double #1a1a1a",
+    margin: "40px 0 20px",
+}
+
+const metaSection = {
+    marginBottom: "24px",
 }
 
 const label = {
-    color: "#8898aa",
-    fontSize: "12px",
-    textTransform: "uppercase" as const,
+    fontSize: "10px",
+    color: "#999",
     fontWeight: "bold",
     marginBottom: "4px",
 }
 
-const value = {
-    color: "#333333",
-    fontSize: "16px",
-    marginBottom: "8px",
-    fontWeight: "bold",
+const typewritten = {
+    fontSize: "14px",
+    color: "#1a1a1a",
+    margin: "0",
 }
 
-const messageText = {
-    color: "#333333",
-    fontSize: "16px",
-    lineHeight: "1.6",
+const bodyContent = {
+    marginTop: "32px",
+    marginBottom: "32px",
+}
+
+const bodyText = {
+    fontSize: "14px",
+    lineHeight: "1.8",
+    color: "#1a1a1a",
     whiteSpace: "pre-wrap" as const,
-    backgroundColor: "#f9f9f9",
-    padding: "16px",
-    borderRadius: "4px",
-}
-
-const divider = {
-    borderTop: "1px solid #e6ebf1",
-    margin: "24px 0",
+    textAlign: "justify" as const,
 }
 
 const footer = {
-    marginTop: "48px",
     textAlign: "center" as const,
 }
 
 const footerText = {
-    color: "#999999",
-    fontSize: "12px",
+    fontSize: "10px",
+    color: "#888",
+    fontStyle: "italic",
 }

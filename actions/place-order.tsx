@@ -7,7 +7,7 @@ import { CartItem } from "@/store/useCartStore"
 
 // Initialize Resend with API Key
 // TODO: Replace with your actual API Key
-const resend = new Resend("re_dnB4L69u_EKTSaTKwrP3FSVCrBfHpPYVa") // 🔴 REPLACE THIS WITH YOUR ACTUAL API KEY
+const resend = new Resend("re_YPmUvPSm_GjmfgnWaiJJR1Yj4qyUCn7kZ") // 🔴 REPLACE THIS WITH YOUR ACTUAL API KEY
 
 interface PlaceOrderParams {
     items: CartItem[]
@@ -24,6 +24,16 @@ export async function placeOrder({ items, details, total }: PlaceOrderParams) {
             day: "numeric",
         })
 
+        const checkoutItems = items.map(item => ({
+            title: item.title,
+            quantity: item.quantity,
+            price: item.price,
+            frame: item.frame,
+            size: item.size,
+            mount: item.mount,
+            thumbnail: item.thumbnail
+        }))
+
         // Prepare email content
         const emailContent = (
             <OrderConfirmationEmail
@@ -33,7 +43,7 @@ export async function placeOrder({ items, details, total }: PlaceOrderParams) {
                 phone={details.phone}
                 address={details.address}
                 city={details.city}
-                items={items}
+                items={checkoutItems}
                 total={total}
                 date={date}
                 paymentMethod={details.paymentMethod}
@@ -43,7 +53,7 @@ export async function placeOrder({ items, details, total }: PlaceOrderParams) {
         // Send email to Admin
         const adminEmail = await resend.emails.send({
             from: "Guzel Art <onboarding@resend.dev>",
-            to: "xyzabc07005@gmail.com", // 🔴 Testing only: Must match your Resend account email
+            to: "guzel.printmallislamabad@gmail.com", // 🔴 Testing only: Must match your Resend account email
             subject: `New Order #${orderId} - ${details.firstName} ${details.lastName}`,
             react: emailContent,
         })
