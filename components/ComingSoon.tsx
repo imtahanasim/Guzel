@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, useMotionValue, useSpring } from "framer-motion"
 import { ArrowRight, Check } from "lucide-react"
+import { joinWaitlist } from "@/actions/join-waitlist"
 
 export default function ComingSoon() {
     const [cursorXY, setCursorXY] = useState({ x: -100, y: -100 })
@@ -32,10 +33,21 @@ export default function ComingSoon() {
         if (!email) return
 
         setIsLoading(true)
-        // Simulate API
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        setIsLoading(false)
-        setIsSubmitted(true)
+
+        try {
+            const result = await joinWaitlist(email)
+            if (result.success) {
+                setIsSubmitted(true)
+            } else {
+                console.error(result.error)
+                alert("Something went wrong. Please try again.")
+            }
+        } catch (error) {
+            console.error(error)
+            alert("Something went wrong. Please try again.")
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (

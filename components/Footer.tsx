@@ -3,7 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, ArrowRight, CreditCard, Wallet } from "lucide-react"
+import { ChevronDown, ArrowRight, CreditCard, Wallet, Loader2, Check } from "lucide-react"
+import { joinWaitlist } from "@/actions/join-waitlist"
 
 // Payment Icons Component
 const PaymentIcons = () => {
@@ -73,6 +74,8 @@ const Accordion = ({
 export default function Footer() {
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
   const [supportOpen, setSupportOpen] = useState(false)
   const [theStudioOpen, setTheStudioOpen] = useState(false)
   const [studioOpen, setStudioOpen] = useState(false)
@@ -82,7 +85,7 @@ export default function Footer() {
     return emailRegex.test(email)
   }
 
-  const handleEmailSubmit = (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) {
       setEmailError("Please enter your email")
@@ -92,10 +95,23 @@ export default function Footer() {
       setEmailError("Please enter a valid email address")
       return
     }
+
     setEmailError("")
-    // Handle newsletter subscription here
-    console.log("Newsletter subscription:", email)
-    setEmail("")
+    setIsSubmitting(true)
+
+    try {
+      const result = await joinWaitlist(email)
+      if (result.success) {
+        setIsSuccess(true)
+        setEmail("")
+      } else {
+        setEmailError(result.error || "Failed to join waitlist")
+      }
+    } catch (error) {
+      setEmailError("Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const supportLinks = [
@@ -269,14 +285,24 @@ export default function Footer() {
                 />
                 <button
                   type="submit"
-                  className="absolute right-0 bottom-2 p-1 hover:opacity-70 transition-opacity"
+                  disabled={isSubmitting || isSuccess}
+                  className="absolute right-0 bottom-2 p-1 hover:opacity-70 transition-opacity disabled:opacity-50"
                   aria-label="Subscribe to newsletter"
                 >
-                  <ArrowRight className="w-4 h-4" />
+                  {isSubmitting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : isSuccess ? (
+                    <Check className="w-4 h-4 text-green-400" />
+                  ) : (
+                    <ArrowRight className="w-4 h-4" />
+                  )}
                 </button>
               </div>
               {emailError && (
                 <p className="text-xs text-red-300">{emailError}</p>
+              )}
+              {isSuccess && (
+                <p className="text-xs text-green-300">You're on the list!</p>
               )}
             </form>
           </div>

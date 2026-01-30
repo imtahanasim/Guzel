@@ -1,17 +1,17 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion, AnimatePresence } from "framer-motion"
 import { z } from "zod"
-import { sendEmail } from "@/actions/send-email"
+import { sendContactMessage } from "@/actions/send-contact-message"
 import { ArrowRight, Loader2, ChevronDown } from "lucide-react"
 
 // --- Schema ---
 const ContactSchema = z.object({
-    name: z.string().min(2, "Name is required"),
-    email: z.string().email("Invalid email address"),
+    name: z.string().min(1, "Name is required"),
+    email: z.string().email("Please enter a valid email address"),
     inquiryType: z.string().min(1, "Please select an inquiry type"),
     timeline: z.string().min(1, "Please select a timeline"),
     message: z.string().min(10, "Message must be at least 10 characters")
@@ -32,7 +32,13 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
 
     const { register, control, handleSubmit, watch, formState: { errors } } = useForm<ContactFormData>({
         resolver: zodResolver(ContactSchema),
-        mode: "onChange"
+        defaultValues: {
+            name: "",
+            email: "",
+            inquiryType: "",
+            timeline: "",
+            message: ""
+        }
     })
 
     // Watch message for length updates
@@ -45,13 +51,15 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
     // OR just wrap the onChange handler.
 
     // Wrapper for Server Action
+    // Wrapper for Server Action
     const onSubmit = async (data: ContactFormData) => {
         setIsSubmitting(true)
         setServerError("")
         const formData = new FormData()
         Object.entries(data).forEach(([key, value]) => formData.append(key, value))
         try {
-            const result = await sendEmail(null, formData)
+            // @ts-ignore
+            const result = await sendContactMessage(null, formData)
             if (result.success) onSuccess()
             else setServerError(result.message || "Something went wrong.")
         } catch (e) {
@@ -130,6 +138,11 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
                         onBlur: onTypingEnd
                     })}
                 />
+                {errors.message && (
+                    <span className="text-red-500 text-xs font-serif absolute -bottom-6 left-0">
+                        {errors.message.message}
+                    </span>
+                )}
             </div>
 
             {/* Server Error */}
@@ -162,7 +175,7 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
 }
 
 // --- High-End Gallery Input ---
-function GalleryInput({ label, id, error, ...props }: any) {
+const GalleryInput = React.forwardRef<HTMLInputElement, any>(({ label, id, error, ...props }, ref) => {
     return (
         <motion.div
             className="w-full relative group space-y-2"
@@ -176,13 +189,20 @@ function GalleryInput({ label, id, error, ...props }: any) {
                 {label} {error && "*"}
             </label>
             <input
+                ref={ref}
                 id={id}
                 className="w-full bg-transparent border-b border-[#d4d4d4] py-2 font-serif text-xl text-[#1a1a1a] focus:outline-none focus:border-[#3e523f] focus:border-b-2 transition-all rounded-none placeholder:text-[#1a1a1a]/20"
                 {...props}
             />
+            {error && (
+                <span className="text-red-500 text-xs font-serif absolute -bottom-6 left-0">
+                    {error}
+                </span>
+            )}
         </motion.div>
     )
-}
+})
+GalleryInput.displayName = "GalleryInput"
 
 // --- Custom Gallery Select ---
 function GallerySelect({ label, options, value, onChange, error }: any) {
@@ -241,6 +261,11 @@ function GallerySelect({ label, options, value, onChange, error }: any) {
                     </>
                 )}
             </AnimatePresence>
+            {error && (
+                <span className="text-red-500 text-xs font-serif absolute -bottom-6 left-0">
+                    {error}
+                </span>
+            )}
         </motion.div>
     )
 }
