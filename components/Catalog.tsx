@@ -8,7 +8,11 @@ import { useSearchParams, useRouter } from "next/navigation"
 
 // --- TYPES ---
 // --- TYPES ---
+<<<<<<< HEAD
 type Category = "All" | "Oil Paintings" | "Canvas Prints" | "Mirrors" | "Calligraphy" | "Landscape Paintings" | "Abstract Art" | "Medium Sized Classics" | "Framed Sets" | "Feature Frames" | "Tile Framed" | "Rumi Dance" | "Contemporary Figurative Art" | "Statement Pieces" | "Mini Frames" | "Gallery Walls" | "Trays" | "Grand Masters" | "All Frames" | "Wooden Frames" | "Empty Frames"     
+=======
+type Category = "All" | "Oil Paintings" | "Canvas Prints" | "Mirrors" | "Calligraphy" | "Landscape Paintings" | "Abstract Art" | "Medium Sized Classics" | "Framed Sets" | "Feature Frames" | "Tile Framed" | "Rumi Dance" | "Contemporary Figurative Art" | "Statement Pieces" | "Mini Frames" | "Gallery Walls" | "Trays" | "Grand Masters" | "All Frames" | "Wooden Frames" | "Empty Frames"
+>>>>>>> 926995b6dac17405966fbf4bafa27230e78c95a6
 
 const CATEGORIES: Category[] = [
     "All",
