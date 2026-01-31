@@ -73,6 +73,7 @@ const Accordion = ({
 
 export default function Footer() {
   const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
   const [emailError, setEmailError] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -100,10 +101,11 @@ export default function Footer() {
     setIsSubmitting(true)
 
     try {
-      const result = await joinWaitlist(email)
+      const result = await joinWaitlist(email, phone)
       if (result.success) {
         setIsSuccess(true)
         setEmail("")
+        setPhone("")
       } else {
         setEmailError(result.error || "Failed to join waitlist")
       }
@@ -272,7 +274,7 @@ export default function Footer() {
               Join the List
             </h4>
             <form onSubmit={handleEmailSubmit} className="space-y-2">
-              <div className="relative">
+              <div className="relative space-y-2">
                 <input
                   type="email"
                   value={email}
@@ -281,6 +283,13 @@ export default function Footer() {
                     setEmailError("")
                   }}
                   placeholder="your@email.com"
+                  className="w-full bg-transparent border-0 border-b border-[#FFF9EF]/30 pb-2 pr-10 text-sm text-[#FFF9EF] placeholder:text-[#FFF9EF]/50 focus:outline-none focus:border-[#FFF9EF]/60 transition-colors"
+                />
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Phone (optional)"
                   className="w-full bg-transparent border-0 border-b border-[#FFF9EF]/30 pb-2 pr-10 text-sm text-[#FFF9EF] placeholder:text-[#FFF9EF]/50 focus:outline-none focus:border-[#FFF9EF]/60 transition-colors"
                 />
                 <button

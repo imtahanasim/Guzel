@@ -12,6 +12,7 @@ import { ArrowRight, Loader2, ChevronDown } from "lucide-react"
 const ContactSchema = z.object({
     name: z.string().min(1, "Name is required"),
     email: z.string().email("Please enter a valid email address"),
+    phone: z.string().optional(),
     inquiryType: z.string().min(1, "Please select an inquiry type"),
     timeline: z.string().min(1, "Please select a timeline"),
     message: z.string().min(10, "Message must be at least 10 characters")
@@ -35,6 +36,7 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
         defaultValues: {
             name: "",
             email: "",
+            phone: "",
             inquiryType: "",
             timeline: "",
             message: ""
@@ -56,7 +58,7 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
         setIsSubmitting(true)
         setServerError("")
         const formData = new FormData()
-        Object.entries(data).forEach(([key, value]) => formData.append(key, value))
+        Object.entries(data).forEach(([key, value]) => formData.append(key, value || ""))
         try {
             // @ts-ignore
             const result = await sendContactMessage(null, formData)
@@ -72,7 +74,7 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-16">
 
-            {/* NAME & EMAIL */}
+            {/* NAME & EMAIL & PHONE */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <GalleryInput
                     label="Your Name"
@@ -89,6 +91,16 @@ export default function ContactForm({ onTypingStart, onTypingEnd, onMessageChang
                     error={errors.email?.message}
                     {...register("email")}
                 />
+                <div className="md:col-span-2">
+                    <GalleryInput
+                        label="Phone Number (Optional)"
+                        id="phone"
+                        type="tel"
+                        placeholder="+92 300 1234567"
+                        error={errors.phone?.message}
+                        {...register("phone")}
+                    />
+                </div>
             </div>
 
             {/* INQUIRY TYPE (Custom Select) */}

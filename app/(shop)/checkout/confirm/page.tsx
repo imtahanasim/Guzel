@@ -39,7 +39,7 @@ export default function ConfirmOrderPage() {
             })
 
             if (result.success) {
-                clearCart()
+                // clearCart() - Removed to prevented race condition. Cart is cleared on success page.
                 router.push("/checkout/success")
             } else {
                 setError(result.error || "Something went wrong")

@@ -16,6 +16,7 @@ interface ContactFormState {
 const ContactSchema = z.object({
     name: z.string().min(1, "Name is required"),
     email: z.string().email("Please enter a valid email address"),
+    phone: z.string().optional(),
     inquiryType: z.string().min(1, "Please select an inquiry type"),
     timeline: z.string().min(1, "Please select a timeline"),
     message: z.string().min(10, "Message must be at least 10 characters")
@@ -26,6 +27,7 @@ export async function sendContactMessage(prevState: any, formData: FormData): Pr
         const rawData = {
             name: formData.get("name")?.toString() || "",
             email: formData.get("email")?.toString() || "",
+            phone: formData.get("phone")?.toString() || "",
             inquiryType: formData.get("inquiryType")?.toString() || "",
             timeline: formData.get("timeline")?.toString() || "",
             message: formData.get("message")?.toString() || "",
@@ -40,7 +42,7 @@ export async function sendContactMessage(prevState: any, formData: FormData): Pr
             }
         }
 
-        const { name, email, inquiryType, timeline, message } = validation.data
+        const { name, email, phone, inquiryType, timeline, message } = validation.data
 
         const date = new Date().toLocaleDateString("en-PK", {
             year: "numeric",
@@ -55,6 +57,7 @@ export async function sendContactMessage(prevState: any, formData: FormData): Pr
             <ContactEmailTemplate
                 name={name}
                 email={email}
+                phone={phone || "Not provided"}
                 inquiryType={inquiryType}
                 timeline={timeline}
                 message={message}

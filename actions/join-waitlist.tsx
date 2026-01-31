@@ -7,7 +7,7 @@ import { WaitlistEmailTemplate } from "@/components/emails/WaitlistEmailTemplate
 // TODO: Replace with your actual API Key or environment variable
 const resend = new Resend("re_YPmUvPSm_GjmfgnWaiJJR1Yj4qyUCn7kZ")
 
-export async function joinWaitlist(email: string) {
+export async function joinWaitlist(email: string, phone?: string) {
     try {
         const date = new Date().toLocaleDateString("en-PK", {
             year: "numeric",
@@ -21,6 +21,7 @@ export async function joinWaitlist(email: string) {
         const emailContent = (
             <WaitlistEmailTemplate
                 email={email}
+                phone={phone}
                 date={date}
             />
         )
@@ -31,7 +32,7 @@ export async function joinWaitlist(email: string) {
             to: "guzel.printmallislamabad@gmail.com", // Keeping consistent with place-order.tsx
             subject: `Waitlist Confirmation: ${email}`,
             react: emailContent,
-            text: `New waitlist signup confirmed for ${email} on ${date}.`,
+            text: `New waitlist signup confirmed for ${email} ${phone ? `(Phone: ${phone})` : ""} on ${date}.`,
             replyTo: email,
         })
 

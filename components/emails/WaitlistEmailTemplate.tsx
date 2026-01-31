@@ -13,11 +13,13 @@ import * as React from "react"
 
 interface WaitlistEmailProps {
     email: string
+    phone?: string
     date: string
 }
 
 export const WaitlistEmailTemplate = ({
     email,
+    phone,
     date,
 }: WaitlistEmailProps) => {
     return (
@@ -50,6 +52,13 @@ export const WaitlistEmailTemplate = ({
 
                             <Text style={label}>REGISTERED EMAIL</Text>
                             <Text style={value}>{email}</Text>
+
+                            {phone && (
+                                <>
+                                    <Text style={label}>PHONE NUMBER</Text>
+                                    <Text style={value}>{phone}</Text>
+                                </>
+                            )}
 
                             <Text style={label}>DATE OF ENTRY</Text>
                             <Text style={value}>{date}</Text>

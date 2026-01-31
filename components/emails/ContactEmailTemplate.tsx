@@ -16,6 +16,7 @@ import * as React from "react"
 interface ContactEmailProps {
     name: string
     email: string
+    phone: string
     inquiryType: string
     timeline: string
     message: string
@@ -25,6 +26,7 @@ interface ContactEmailProps {
 export const ContactEmailTemplate = ({
     name,
     email,
+    phone,
     inquiryType,
     timeline,
     message,
@@ -55,6 +57,7 @@ export const ContactEmailTemplate = ({
                             <Column>
                                 <Text style={label}>FROM:</Text>
                                 <Text style={typewritten}>{name} &lt;{email}&gt;</Text>
+                                {phone && <Text style={typewritten}>Tel: {phone}</Text>}
                             </Column>
                             <Column style={{ textAlign: "right" }}>
                                 <Text style={label}>DATE:</Text>

@@ -9,6 +9,7 @@ export default function ComingSoon() {
     const [cursorXY, setCursorXY] = useState({ x: -100, y: -100 })
     const [isTouch, setIsTouch] = useState(false)
     const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -35,7 +36,7 @@ export default function ComingSoon() {
         setIsLoading(true)
 
         try {
-            const result = await joinWaitlist(email)
+            const result = await joinWaitlist(email, phone)
             if (result.success) {
                 setIsSubmitted(true)
             } else {
@@ -140,21 +141,28 @@ export default function ComingSoon() {
                             </motion.div>
                         </div>
                     ) : (
-                        <form onSubmit={handleJoin} className="relative group">
+                        <form onSubmit={handleJoin} className="relative group space-y-4">
                             {/* Ticket Shape */}
-                            <div className="relative overflow-hidden">
+                            <div className="relative overflow-hidden space-y-4">
                                 <input
                                     type="email"
                                     required
                                     placeholder="Enter your email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full bg-transparent border-b border-[#3A4D39] py-4 text-[#3A4D39] placeholder-[#3A4D39]/40 font-serif text-lg focus:outline-none focus:border-b-2 transition-all rounded-none"
+                                />
+                                <input
+                                    type="tel"
+                                    placeholder="Phone number (optional)"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
                                     className="w-full bg-transparent border-b border-[#3A4D39] py-4 text-[#3A4D39] placeholder-[#3A4D39]/40 font-serif text-lg focus:outline-none focus:border-b-2 transition-all rounded-none pr-12"
                                 />
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="absolute right-0 top-0 bottom-0 flex items-center text-[#3A4D39] hover:text-[#2A3829] transition-colors"
+                                    className="absolute right-0 bottom-4 flex items-center text-[#3A4D39] hover:text-[#2A3829] transition-colors"
                                 >
                                     {isLoading ? (
                                         <span className="text-xs uppercase tracking-widest animate-pulse">Wait...</span>
